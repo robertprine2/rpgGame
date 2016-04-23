@@ -6,17 +6,36 @@ body {
 
 }
 
-.pixelPic {
-	height: 128px;
-	width: 128px;
-}
-
 .charSel {
 	height: 500px;
 }
 
-.pixelPic {
+/* Health Bar */
+
+.bar {
+	width: 128px;
 	float: left;
+	text-align: center;
+}
+
+/* Character Pictures */
+
+.pixelPic {
+	height: 128px;
+	width: 128px;
+	float: left;
+}
+
+/* attack and ability buttons */
+
+.attack {
+	color: black;
+	width: 64px;
+}
+
+.ability {
+	color: black;
+	width: 64px;
 }
 
 /* Social Icons and footer */

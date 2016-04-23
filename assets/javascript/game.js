@@ -10,12 +10,16 @@ $(document).ready(function(){
 		characters : 
 			[jack = {
 			name: "Jack",
+			totalHealth: 400,
+			currentHealth: 400,
 			attack: 50,
 			image: "<img class='pixelPic' src='assets/images/jack.png'>"}, 
 
 			rSanta = {
 			name: "Radioactive Santa",
-			attack: 50,
+			totalHealth: 500,
+			currentHealth: 500,
+			attack: 40,
 			image: "<img class='pixelPic' src='assets/images/rSanta.png'>"}],
 
 		// List characters on top of screen
@@ -25,7 +29,9 @@ $(document).ready(function(){
 
 				var c = $('<button>');
 				c.addClass("char-button " + game.characters[i].name);
-				c.attr('data-char', game.characters[i].image);
+				c.attr('data-char', game.characters[i]);
+				console.log(game.characters[i]);
+				c.attr('data-img', game.characters[i].image);
 				c.html(game.characters[i].image);
 
 				$(".charSel").append(c);
@@ -34,7 +40,7 @@ $(document).ready(function(){
 
 
 
-	} //ends game object
+	}; //ends game object
 	
 
 	// List characters on top of screen
@@ -44,10 +50,22 @@ $(document).ready(function(){
 	// Move character selected to arena
 
 	$(".char-button").on("click", function() {
-		var pick = $('<div class="char">').html($(this).data('char'));
+		var pick = $('<div class="char">').html($(this).data('img'));
 		$(".team").append(pick);
 		$(this).hide();
-	})
+
+		var buttonAtt = $('<button class="attack">').text("Attack");
+		$(".but").append(buttonAtt);
+
+		var buttonAbil = $('<button class="ability">').text("Ability");
+		$(".but").append(buttonAbil);
+
+		// var healthbar = $('<div class="progress-bar-success bar" role="progresbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">health</div>');
+		// $(".healthbar").append(healthbar);
+		
+		console.log($(this).data('char'));
+		var healthbar = $('<div class="health"><p>' + game.characters[$(this).data('char')].currentHealth + '/' + game.characters[$(this).data('char')].totalHealth + '</p></div>');
+	});
 
 	// Computer random selection for defender
 
