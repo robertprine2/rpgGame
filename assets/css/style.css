@@ -12,9 +12,14 @@ body {
 
 /* Health Bar */
 
-.bar {
+div.healthBG {
 	width: 128px;
 	float: left;
+}
+
+.bar {
+	width: 100%;
+	
 	text-align: center;
 }
 

@@ -8,19 +8,21 @@ $(document).ready(function(){
 
 	var game = {
 		characters : 
-			[jack = {
+			[{
 			name: "Jack",
 			totalHealth: 400,
 			currentHealth: 400,
 			attack: 50,
-			image: "<img class='pixelPic' src='assets/images/jack.png'>"}, 
+			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
+			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
-			rSanta = {
+			{
 			name: "Radioactive Santa",
 			totalHealth: 500,
 			currentHealth: 500,
 			attack: 40,
-			image: "<img class='pixelPic' src='assets/images/rSanta.png'>"}],
+			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
+			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
 
 		// List characters on top of screen
 
@@ -29,9 +31,13 @@ $(document).ready(function(){
 
 				var c = $('<button>');
 				c.addClass("char-button " + game.characters[i].name);
-				c.attr('data-char', game.characters[i]);
-				console.log(game.characters[i]);
-				c.attr('data-img', game.characters[i].image);
+				// c.attr('data-name', game.characters[i].name);
+				// c.attr('data-totalHealth', game.characters[i].totalHealth);
+				// c.attr('data-currentHealth', game.characters[i].currentHealth);
+				// c.attr('data-attack', game.characters[i].attack);
+				// c.attr('data-img', game.characters[i].image);
+				//****INSANELY AWESOME!!!!!
+				c.attr('data-index', i); 
 				c.html(game.characters[i].image);
 
 				$(".charSel").append(c);
@@ -50,7 +56,11 @@ $(document).ready(function(){
 	// Move character selected to arena
 
 	$(".char-button").on("click", function() {
-		var pick = $('<div class="char">').html($(this).data('img'));
+		
+		var character = game.characters[$(this).data('index')];
+		console.log(character);
+
+		var pick = $('<div class="char">').html(character.image);
 		$(".team").append(pick);
 		$(this).hide();
 
@@ -59,12 +69,10 @@ $(document).ready(function(){
 
 		var buttonAbil = $('<button class="ability">').text("Ability");
 		$(".but").append(buttonAbil);
-
-		// var healthbar = $('<div class="progress-bar-success bar" role="progresbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">health</div>');
-		// $(".healthbar").append(healthbar);
 		
 		console.log($(this).data('char'));
-		var healthbar = $('<div class="health"><p>' + game.characters[$(this).data('char')].currentHealth + '/' + game.characters[$(this).data('char')].totalHealth + '</p></div>');
+		var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+		$(".healthbar").append(healthbar);
 	});
 
 	// Computer random selection for defender
