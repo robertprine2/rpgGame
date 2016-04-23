@@ -11,6 +11,16 @@ body {
 	width: 128px;
 }
 
+.charSel {
+	height: 500px;
+}
+
+.pixelPic {
+	float: left;
+}
+
+/* Social Icons and footer */
+
 .center {
 	
 	margin: 0 auto;

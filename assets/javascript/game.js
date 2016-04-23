@@ -24,8 +24,8 @@ $(document).ready(function(){
 			for (var i = 0; i < game.characters.length; i++) {
 
 				var c = $('<button>');
-				c.addClass("char-button " + game.characters[i].name)
-				c.attr('data-char', game.characters[i].image)
+				c.addClass("char-button " + game.characters[i].name);
+				c.attr('data-char', game.characters[i].image);
 				c.html(game.characters[i].image);
 
 				$(".charSel").append(c);
@@ -46,6 +46,7 @@ $(document).ready(function(){
 	$(".char-button").on("click", function() {
 		var pick = $('<div class="char">').html($(this).data('char'));
 		$(".team").append(pick);
+		$(this).hide();
 	})
 
 	// Computer random selection for defender
