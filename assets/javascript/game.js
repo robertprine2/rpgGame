@@ -7,6 +7,9 @@ $(document).ready(function(){
 	// object of characters that can be chosen 
 
 	var game = {
+
+		clicks: 0,
+
 		characters : 
 			[{
 			name: "Jack",
@@ -59,6 +62,9 @@ $(document).ready(function(){
 
 	$(".char-button").on("click", function() {
 		
+		game.clicks = game.clicks + 1;
+		console.log(game.clicks);
+
 		//sets variable character to the object of a character so that you can pull information out of the object
 
 		var character = game.characters[$(this).data('index')];
@@ -70,7 +76,7 @@ $(document).ready(function(){
 		$(".team").append(pick);
 		$(this).hide();
 		
-		//******Create character name and health above bar?
+		//******Create character name
 
 		// Creates the healthbars above the characters
 		

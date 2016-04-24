@@ -33,15 +33,17 @@ div.healthbarComp {
 
 /* Character Pictures */
 
-div.team, div.opponent {
-	
+div.team, div.team2, div.team3 {
+	float: left;
+}
 
+div.opponent, div.opponent2, div.opponent3 {
+	float: right;
 }
 
 .pixelPic {
 	height: 128px;
 	width: 128px;
-	float: left;
 }
 
 /* attack and ability buttons */
