@@ -10,17 +10,19 @@ $(document).ready(function(){
 		characters : 
 			[{
 			name: "Jack",
-			totalHealth: 400,
-			currentHealth: 400,
-			attack: 50,
+			totalHealth: 200,
+			currentHealth: 200,
+			attack: 8,
+			counterAttack: 25,
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
 			{
 			name: "Radioactive Santa",
-			totalHealth: 500,
-			currentHealth: 500,
-			attack: 40,
+			totalHealth: 250,
+			currentHealth: 250,
+			attack: 4,
+			counterAttack: 25,
 			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
 
@@ -42,9 +44,9 @@ $(document).ready(function(){
 
 				$(".charSel").append(c);
 			} //ends for loop
-		} // ends charSelect function
+		} // ends charList function
 
-
+		
 
 	}; //ends game object
 	
@@ -67,15 +69,9 @@ $(document).ready(function(){
 		var pick = $('<div class="char">').html(character.image);
 		$(".team").append(pick);
 		$(this).hide();
-
-		// Creates the attack and ability buttons below the characters
-
-		var buttonAtt = $('<button class="attack">').text("Attack");
-		$(".but").append(buttonAtt);
-
-		var buttonAbil = $('<button class="ability">').text("Ability");
-		$(".but").append(buttonAbil);
 		
+		//******Create character name and health above bar?
+
 		// Creates the healthbars above the characters
 		
 		var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
@@ -85,7 +81,7 @@ $(document).ready(function(){
 
 		var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
 
-		console.log(compPick)
+		// Computer puts their character in arena
 
 		var compChar = $('<div class="char">').html(compPick.imageComp);
 
@@ -95,14 +91,55 @@ $(document).ready(function(){
 
 		// ******How do you hide the character button based on the computers pick?
 
-		var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+		// Loads Computer character's healthbars
+
+		var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 		$(".healthbarComp").append(healthbarComp);
+
+		// Creates the attack and ability buttons below the characters
+
+		var buttonAtt = $('<button class="attack">').text("Attack");
+		$(".but").append(buttonAtt);
+
+		$(".attack").on("click", function() {
+			compPick.currentHealth = compPick.currentHealth - character.attack;
+			character.attack = character.attack + 6;
+			console.log(compPick.currentHealth);
+
+			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+			$(".healthbarComp").html(healthbarComp);
+
+			$(".compHealth").css("width", (compPick.currentHealth / compPick.totalHealth *100) + "%");
+
+			if (compPick.currentHealth <= 0) {
+				$(".opponent").empty();
+			}
+
+			else {
+				character.currentHealth = character.currentHealth - compPick.counterAttack;
+
+				var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+				$(".healthbar").html(healthbar);
+				$(".health").css("width", (character.currentHealth / character.totalHealth * 100) + "%");
+
+				if (character.currentHealth <= 0) {
+					$(".team").empty();
+					$(".team").fadeIn("slow", function() {
+						$(".team").text("You Lose!");
+					});
+				}
+
+			}
+		});
+
+		var buttonAbil = $('<button class="ability">').text("Ability");
+		$(".but").append(buttonAbil);
 
 	});
 
-	// Computer random selection for defender
-
 	// Player clicks a button to perform a task This happens until a group of characters is knocked out
+
+
 
 	// Computer randomly chooses attack or ability
 

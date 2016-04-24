@@ -7,10 +7,14 @@ body {
 }
 
 .charSel {
-	height: 500px;
+	height: 400px;
 }
 
 /* Health Bar */
+
+.progress {
+	background-color: red;
+}
 
 div.healthBG {
 	width: 128px;
