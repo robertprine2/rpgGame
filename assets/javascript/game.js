@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	// ******Global variables for abilities?
 
-	// ******object of characters that can be chosen -- maybe right facing and left facing? 
+	// object of characters that can be chosen 
 
 	var game = {
 		characters : 
@@ -57,12 +57,18 @@ $(document).ready(function(){
 
 	$(".char-button").on("click", function() {
 		
+		//sets variable character to the object of a character so that you can pull information out of the object
+
 		var character = game.characters[$(this).data('index')];
 		console.log(character);
+
+		// Moves the character you picked to the arena and then hides the button
 
 		var pick = $('<div class="char">').html(character.image);
 		$(".team").append(pick);
 		$(this).hide();
+
+		// Creates the attack and ability buttons below the characters
 
 		var buttonAtt = $('<button class="attack">').text("Attack");
 		$(".but").append(buttonAtt);
@@ -70,9 +76,28 @@ $(document).ready(function(){
 		var buttonAbil = $('<button class="ability">').text("Ability");
 		$(".but").append(buttonAbil);
 		
-		console.log($(this).data('char'));
+		// Creates the healthbars above the characters
+		
 		var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
 		$(".healthbar").append(healthbar);
+
+		// Computer randomly picks their character
+
+		var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
+
+		console.log(compPick)
+
+		var compChar = $('<div class="char">').html(compPick.imageComp);
+
+		
+		$(".opponent").append(compChar);
+		
+
+		// ******How do you hide the character button based on the computers pick?
+
+		var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+		$(".healthbarComp").append(healthbarComp);
+
 	});
 
 	// Computer random selection for defender

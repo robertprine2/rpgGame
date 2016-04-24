@@ -14,7 +14,11 @@ body {
 
 div.healthBG {
 	width: 128px;
-	float: left;
+	display: inline-block;
+}
+
+div.healthbarComp {
+	display: inline-block;
 }
 
 .bar {
@@ -24,6 +28,11 @@ div.healthBG {
 }
 
 /* Character Pictures */
+
+div.team, div.opponent {
+	
+
+}
 
 .pixelPic {
 	height: 128px;
