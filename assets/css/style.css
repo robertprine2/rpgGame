@@ -3,6 +3,7 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100% 1000px;
 	color: white;
+	text-align: center;
 
 }
 
@@ -18,11 +19,11 @@ body {
 
 div.healthBG {
 	width: 128px;
-	display: inline-block;
+	
 }
 
 div.healthbarComp {
-	display: inline-block;
+	
 }
 
 .bar {
@@ -34,11 +35,11 @@ div.healthbarComp {
 /* Character Pictures */
 
 div.team, div.team2, div.team3 {
-	float: left;
+	
 }
 
 div.opponent, div.opponent2, div.opponent3 {
-	float: right;
+	
 }
 
 .pixelPic {
@@ -48,14 +49,20 @@ div.opponent, div.opponent2, div.opponent3 {
 
 /* attack and ability buttons */
 
+.but {
+
+}
+
 .attack {
 	color: black;
-	width: 64px;
+	width: 50%;
+	float: left;
 }
 
 .ability {
 	color: black;
-	width: 64px;
+	width: 50%;
+	float: left;
 }
 
 /* Social Icons and footer */

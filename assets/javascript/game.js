@@ -62,6 +62,8 @@ $(document).ready(function(){
 
 	$(".char-button").on("click", function() {
 		
+		// Increase the number of clicks so that you can count how many character a player has left to choose
+
 		game.clicks = game.clicks + 1;
 		console.log(game.clicks);
 
@@ -72,40 +74,55 @@ $(document).ready(function(){
 
 		// Moves the character you picked to the arena and then hides the button
 
-		var pick = $('<div class="char">').html(character.image);
-		$(".team").append(pick);
-		$(this).hide();
-		
-		//******Create character name
+		if (game.clicks == 1) {
 
-		// Creates the healthbars above the characters
-		
-		var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
-		$(".healthbar").append(healthbar);
+			// Create character name
 
-		// Computer randomly picks their character
+			$(".name").append('<p>' + character.name + '</p>');
 
-		var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
+			// Creates the healthbars above the characters
+			
+			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+			$(".healthbar").append(healthbar);
 
-		// Computer puts their character in arena
+			// Move image of character to arena
 
-		var compChar = $('<div class="char">').html(compPick.imageComp);
+			var pick = $('<div class="char">').html(character.image);
+			$(".team").append(pick);
+			$(this).hide();
+			
+			// Creates the attack and ability buttons below the characters
 
-		
-		$(".opponent").append(compChar);
-		
+			var buttonAtt = $('<button class="attack">').text("Attack");
+			$(".but").append(buttonAtt);
 
-		// ******How do you hide the character button based on the computers pick?
+			var buttonAbil = $('<button class="ability">').text("Ability");
+			$(".but").append(buttonAbil);
 
-		// Loads Computer character's healthbars
+			
 
-		var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
-		$(".healthbarComp").append(healthbarComp);
+			// Computer randomly picks their character
 
-		// Creates the attack and ability buttons below the characters
+			var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
 
-		var buttonAtt = $('<button class="attack">').text("Attack");
-		$(".but").append(buttonAtt);
+			// Computer puts their character in arena
+
+			var compChar = $('<div class="char">').html(compPick.imageComp);
+
+			
+			$(".opponent").append(compChar);
+			
+
+			// ******How do you hide the character button based on the computers pick?
+
+			// Loads Computer character's healthbars
+
+			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+			$(".healthbarComp").append(healthbarComp);
+
+			
+
+		} //end of if statement for which part of the arena to put characters in
 
 		$(".attack").on("click", function() {
 			compPick.currentHealth = compPick.currentHealth - character.attack;
@@ -142,8 +159,7 @@ $(document).ready(function(){
 			}
 		});
 
-		var buttonAbil = $('<button class="ability">').text("Ability");
-		$(".but").append(buttonAbil);
+		
 
 	});
 
