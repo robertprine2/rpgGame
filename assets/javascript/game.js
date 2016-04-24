@@ -113,6 +113,10 @@ $(document).ready(function(){
 
 			if (compPick.currentHealth <= 0) {
 				$(".opponent").empty();
+
+				$(".opponent").fadeIn("slow", function() {
+					$(".opponent").text("You Win!");
+				});
 			}
 
 			else {
