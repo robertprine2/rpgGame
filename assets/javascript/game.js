@@ -42,7 +42,6 @@ $(document).ready(function(){
 				// c.attr('data-totalHealth', game.characters[i].totalHealth);
 				// c.attr('data-currentHealth', game.characters[i].currentHealth);
 				// c.attr('data-attack', game.characters[i].attack);
-				// c.attr('data-img', game.characters[i].image);
 				//****INSANELY AWESOME!!!!!
 				c.attr('data-index', i); 
 				c.html(game.characters[i].image);
@@ -67,7 +66,6 @@ $(document).ready(function(){
 		// Increase the number of clicks so that you can count how many character a player has left to choose
 
 		game.clicks = game.clicks + 1;
-		console.log(game.clicks);
 
 		//sets variable character to the object of a character so that you can pull information out of the object
 
@@ -87,9 +85,10 @@ $(document).ready(function(){
 			$(".healthbar").append(healthbar);
 
 			// Move image of character to arena
-			console.log(character);
+		
 			var pick = $('<button class="char">').html(character.image);
-			pick.attr('data-index', character);
+			pick.attr('data-name', character.name);
+			console.log(character.name);
 			$(".team").append(pick);
 			$(this).hide();
 			
@@ -184,7 +183,13 @@ $(document).ready(function(){
 			$(".target").removeClass("target");
 			$(this).addClass("target");
 
-			game.target = game.characters[$(this).data('index')];
+			console.log(character.name);
+			console.log($(this).data('name'));
+
+			game.target = game.characters.filter(function (ch) {
+				return ch.name == $(this).data('name');
+			});
+
 			console.log(game.target);
 		});
 
@@ -192,7 +197,6 @@ $(document).ready(function(){
 
 		$(".attack").on("click", function() {
 			
-
 			target.currentHealth = target.currentHealth - character.attack;
 			character.attack = character.attack + 6;
 			console.log(target.currentHealth);
