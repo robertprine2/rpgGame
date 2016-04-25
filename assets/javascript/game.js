@@ -10,6 +10,8 @@ $(document).ready(function(){
 
 		clicks: 0,
 
+		target: "",
+
 		characters : 
 			[{
 			name: "Jack",
@@ -86,7 +88,7 @@ $(document).ready(function(){
 
 			// Move image of character to arena
 
-			var pick = $('<div class="char">').html(character.image);
+			var pick = $('<button class="char">').html(character.image);
 			$(".team").append(pick);
 			$(this).hide();
 			
@@ -110,7 +112,7 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena
 
-			var compChar = $('<div class="char">').html(compPick.imageComp);
+			var compChar = $('<button class="char">').html(compPick.imageComp);
 
 			
 			$(".opponent").append(compChar);
@@ -127,7 +129,7 @@ $(document).ready(function(){
 
 		else if (game.clicks == 2) {
 			// Create character name
-			var character2 = this;
+
 			$(".name2").append('<p>' + character.name + '</p>');
 
 			// Creates the healthbars above the characters
@@ -137,7 +139,7 @@ $(document).ready(function(){
 
 			// Move image of character to arena
 
-			var pick = $('<div class="char">').html(character.image);
+			var pick = $('<button class="char">').html(character.image);
 			$(".team2").append(pick);
 			$(this).hide();
 			
@@ -164,7 +166,7 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena
 
-			var compChar2 = $('<div class="char">').html(compPick.imageComp);
+			var compChar2 = $('<button class="char">').html(compPick.imageComp);
 
 			
 			$(".opponent2").append(compChar2);
@@ -174,6 +176,15 @@ $(document).ready(function(){
 
 			
 		} // End else if statement for picking the second character in arena
+
+		//Targets a character for attacking or using abilities
+
+		$(".char").on("click", function() {
+			$(".target").removeClass("target");
+			$(this).addClass("target");
+		});
+
+		// ******Attacks the TARGET
 
 		$(".attack").on("click", function() {
 			compPick.currentHealth = compPick.currentHealth - character.attack;

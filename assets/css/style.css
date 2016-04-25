@@ -42,12 +42,20 @@ div.healthbarComp {
 
 /* Character Pictures */
 
+.target {
+	border: 5px solid red;
+}
+
 div.team, div.team2, div.team3 {
 	
 }
 
 div.opponent, div.opponent2, div.opponent3 {
 	
+}
+
+.char {
+
 }
 
 .pixelPic {
