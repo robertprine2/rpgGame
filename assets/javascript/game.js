@@ -87,8 +87,9 @@ $(document).ready(function(){
 			$(".healthbar").append(healthbar);
 
 			// Move image of character to arena
-
+			console.log(character);
 			var pick = $('<button class="char">').html(character.image);
+			pick.attr('data-index', character);
 			$(".team").append(pick);
 			$(this).hide();
 			
@@ -182,14 +183,19 @@ $(document).ready(function(){
 		$(".char").on("click", function() {
 			$(".target").removeClass("target");
 			$(this).addClass("target");
+
+			game.target = game.characters[$(this).data('index')];
+			console.log(game.target);
 		});
 
 		// ******Attacks the TARGET
 
 		$(".attack").on("click", function() {
-			compPick.currentHealth = compPick.currentHealth - character.attack;
+			
+
+			target.currentHealth = target.currentHealth - character.attack;
 			character.attack = character.attack + 6;
-			console.log(compPick.currentHealth);
+			console.log(target.currentHealth);
 
 			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp").html(healthbarComp);
