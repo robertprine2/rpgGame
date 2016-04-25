@@ -19,8 +19,32 @@ $(document).ready(function(){
 			currentHealth: 200,
 			attack: 8,
 			counterAttack: 25,
+			//mana and return mana on attack clicks?
+			//defense
+			//weakness
+			//ability
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
+
+			{
+			name: "Spike",
+			totalHealth: 400,
+			currentHealth: 400,
+			attack: 2,
+			counterAttack: 30,
+			// ability taunt,
+			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
+			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
+
+			{
+			name: "Respite", 
+			totalHealth: 200,
+			currentHealth: 200,
+			attack: 4,
+			counterAttack: 20,
+			// ability heal,
+			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
+			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
 			{
 			name: "Radioactive Santa",
@@ -30,6 +54,53 @@ $(document).ready(function(){
 			counterAttack: 25,
 			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
+
+
+		// Copy of characters for computer to pick and splice from
+
+		randCharacters : 
+			[{
+			name: "Jack",
+			totalHealth: 200,
+			currentHealth: 200,
+			attack: 8,
+			counterAttack: 25,
+			//mana and return mana on attack clicks?
+			//defense
+			//weakness
+			//ability
+			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
+			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
+
+			{
+			name: "Spike",
+			totalHealth: 400,
+			currentHealth: 400,
+			attack: 2,
+			counterAttack: 30,
+			// ability taunt,
+			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
+			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
+
+			{
+			name: "Respite", 
+			totalHealth: 200,
+			currentHealth: 200,
+			attack: 4,
+			counterAttack: 20,
+			// ability heal,
+			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
+			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
+
+			{
+			name: "Radioactive Santa",
+			totalHealth: 250,
+			currentHealth: 250,
+			attack: 4,
+			counterAttack: 25,
+			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
+			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
+
 
 		// List characters on top of screen
 
@@ -53,7 +124,7 @@ $(document).ready(function(){
 		
 
 	}; //ends game object
-	
+
 
 	// List characters on top of screen
 	
@@ -91,8 +162,14 @@ $(document).ready(function(){
 			console.log(character.name);
 			$(".team").append(pick);
 			$(this).hide();
+
+			// Remove pick from randCharacter
+
+			game.randCharacters.splice($(this).data('index'), 1);
+
+			console.log(game.randCharacters);
 			
-			// Creates the attack and ability buttons below the characters
+			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
 
 			var buttonAtt = $('<button class="attack">').text("Attack");
 			$(".but").append(buttonAtt);
@@ -103,8 +180,9 @@ $(document).ready(function(){
 			
 
 			// Computer randomly picks their character
+			var randIndex = Math.floor(Math.random() * game.randCharacters.length);
 
-			var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
+			var compPick = game.randCharacters[randIndex];
 
 			// Create character name
 
@@ -113,12 +191,17 @@ $(document).ready(function(){
 			// Computer puts their character in arena
 
 			var compChar = $('<button class="char">').html(compPick.imageComp);
-
+			compChar.attr('data-name', compPick.name);
 			
 			$(".opponent").append(compChar);
 			
-
 			// ******How do you hide the character button based on the computers pick?
+
+			// Remove pick from randCharacter
+
+			game.randCharacters.splice(randIndex, 1);
+
+			console.log(game.randCharacters);
 
 			// Loads Computer character's healthbars
 
@@ -219,7 +302,7 @@ $(document).ready(function(){
 			}
 
 			else {
-				character.currentHealth = character.currentHealth - compPick.counterAttack;
+				character.currentHealth = character.currentHealth - game.target.counterAttack;
 
 				var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
 				$(".healthbar").html(healthbar);
