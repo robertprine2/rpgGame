@@ -183,12 +183,15 @@ $(document).ready(function(){
 			$(".target").removeClass("target");
 			$(this).addClass("target");
 
-			console.log(character.name);
-			console.log($(this).data('name'));
-
-			game.target = game.characters.filter(function (ch) {
-				return ch.name == $(this).data('name');
+			// console.log(character.name);
+			// console.log($(this).data('name'));
+			var that = this;
+			
+			var filterArray = game.characters.filter(function (ch) {
+				return ch.name == $(that).data('name');
 			});
+			console.log(filterArray);
+			game.target = filterArray[0];
 
 			console.log(game.target);
 		});
@@ -197,9 +200,9 @@ $(document).ready(function(){
 
 		$(".attack").on("click", function() {
 			
-			target.currentHealth = target.currentHealth - character.attack;
+			game.target.currentHealth = game.target.currentHealth - character.attack;
 			character.attack = character.attack + 6;
-			console.log(target.currentHealth);
+			console.log(game.target.currentHealth);
 
 			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp").html(healthbarComp);
