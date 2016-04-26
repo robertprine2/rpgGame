@@ -8,9 +8,15 @@ $(document).ready(function(){
 
 	var game = {
 
+		// Variable to move characters to the right arena location on the screen
+
 		clicks: 0,
 
+		// Variable to allow targeting for the player
+
 		target: "",
+
+		//Array that contains objects of the characters with all their information
 
 		characters : 
 			[
@@ -20,20 +26,21 @@ $(document).ready(function(){
 			currentHealth: 200,
 			attack: 8,
 			counterAttack: 25,
-			//mana and return mana on attack clicks?
-			//defense
-			//weakness
-			//ability
+			mana: 10,
+			defense: 10,
+			ability: "Quick Strike",
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
 			Spike = {
 			name: "Spike",
-			totalHealth: 400,
-			currentHealth: 400,
+			totalHealth: 300,
+			currentHealth: 300,
 			attack: 2,
-			counterAttack: 30,
-			// ability taunt,
+			counterAttack: 40,
+			mana: 10,
+			defense: 30,
+			ability: "Intimidate",
 			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
 
@@ -43,7 +50,9 @@ $(document).ready(function(){
 			currentHealth: 200,
 			attack: 4,
 			counterAttack: 20,
-			// ability heal,
+			mana: 20,
+			defense: 10,
+			ability: "Heal",
 			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
@@ -53,11 +62,14 @@ $(document).ready(function(){
 			currentHealth: 250,
 			attack: 4,
 			counterAttack: 25,
+			mana: 10,
+			defense: 10,
+			ability: "Radiation",
 			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
 
 
-		// Copy of characters for computer to pick and splice from
+		// Copy of characters for computer to pick and splice from so there are no multiple characters
 
 		randCharacters : 
 			[
@@ -67,20 +79,21 @@ $(document).ready(function(){
 			currentHealth: 200,
 			attack: 8,
 			counterAttack: 25,
-			//mana and return mana on attack clicks?
-			//defense
-			//weakness
-			//ability
+			mana: 10,
+			defense: 10,
+			ability: "Quick Strike",
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
 			Spike = {
 			name: "Spike",
-			totalHealth: 400,
-			currentHealth: 400,
+			totalHealth: 300,
+			currentHealth: 300,
 			attack: 2,
-			counterAttack: 30,
-			// ability taunt,
+			counterAttack: 40,
+			mana: 10,
+			defense: 30,
+			ability: "Intimidate",
 			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
 
@@ -90,7 +103,9 @@ $(document).ready(function(){
 			currentHealth: 200,
 			attack: 4,
 			counterAttack: 20,
-			// ability heal,
+			mana: 20,
+			defense: 10,
+			ability: "Heal",
 			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
@@ -100,11 +115,14 @@ $(document).ready(function(){
 			currentHealth: 250,
 			attack: 4,
 			counterAttack: 25,
+			mana: 10,
+			defense: 10,
+			ability: "Radiation",
 			image: "<img class='pixelPic' src='assets/images/rSantaR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/rSantaL.png'>"}],
 
 
-		// List characters on top of screen
+		// List characters on top of screen for player to choose from
 
 		charList: function() {
 			for (var i = 0; i < game.characters.length; i++) {
@@ -129,7 +147,7 @@ $(document).ready(function(){
 	}; //ends game object
 
 
-	// List characters on top of screen
+	// List characters on top of screen for player to choose from
 	
 	game.charList();
 
@@ -137,7 +155,7 @@ $(document).ready(function(){
 
 	$(".char-button").on("click", function() {
 		
-		// Increase the number of clicks so that you can count how many character a player has left to choose
+		// Increase the number of clicks so that you can count how many characters a player has left to choose
 
 		game.clicks = game.clicks + 1;
 
@@ -153,13 +171,13 @@ $(document).ready(function(){
 
 			$(".name").append('<p>' + character.name + '</p>');
 
-			// Creates the healthbars above the characters
+			// Creates healthbar1 to the first column
 			
 			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
 			healthbar.attr("id", "health1");
 			$(".healthbar").append(healthbar);
 			
-			// Move image of character to arena
+			// Move image of char1 to arena (first column)
 		
 			var pick = $('<button class="char">').html(character.image);
 			pick.attr('data-name', character.name);
@@ -167,7 +185,7 @@ $(document).ready(function(){
 			$(".team").append(pick);
 			$(this).hide();
 
-			// Remove pick from randCharacter
+			// Remove pick from randCharacter (no multiple characters)
 
 			game.randCharacters.splice($(this).data('index'), 1);
 
