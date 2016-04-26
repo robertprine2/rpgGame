@@ -159,7 +159,7 @@ $(document).ready(function(){
 		
 			var pick = $('<button class="char">').html(character.image);
 			pick.attr('data-name', character.name);
-			console.log(character.name);
+			
 			$(".team").append(pick);
 			$(this).hide();
 
@@ -196,6 +196,8 @@ $(document).ready(function(){
 			$(".opponent").append(compChar);
 			
 			// ******How do you hide the character button based on the computers pick?
+
+			$("." + compPick.name).hide();
 
 			// Remove pick from randCharacter
 
