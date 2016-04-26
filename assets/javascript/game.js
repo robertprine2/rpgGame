@@ -196,21 +196,20 @@ $(document).ready(function(){
 			var buttonAtt = $('<button id="attack1">').text("Attack");
 			$(".but").append(buttonAtt);
 
-			var buttonAbil = $('<button id="ability1">').text("Ability");
+			var buttonAbil = $('<button id="ability1">').text(character.ability);
 			$(".but").append(buttonAbil);
 
-			
-
 			// Computer randomly picks their character
+
 			var randIndex = Math.floor(Math.random() * game.randCharacters.length);
 
 			var compPick = game.randCharacters[randIndex];
 
-			// Create character name
+			// Create character name for computer 3rd column
 
 			$(".compName").append('<p>' + compPick.name + '</p>');
 
-			// Computer puts their character in arena
+			// Computer puts their character in arena 3rd column
 
 			var compChar = $('<button class="char" id="char3">').html(compPick.imageComp);
 			compChar.attr('data-name', compPick.name);
@@ -227,24 +226,24 @@ $(document).ready(function(){
 			console.log(randIndex);
 			console.log(game.randCharacters);
 
-			// Loads Computer character's healthbars
+			// Loads Computer character's healthbars 3rd column
 
 			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" id="health3" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp").append(healthbarComp);
 
-		} //end of if statement for which part of the arena to put characters in
+		} //end of if statement for 1 click
 
 		else if (game.clicks == 2) {
-			// Create character name
+			// Create 2nd player character name 2nd column
 
 			$(".name2").append('<p>' + character.name + '</p>');
 
-			// Creates the healthbars above the characters
+			// Creates the 2nd characters healthbar above the characters 2nd column
 			
 			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" id="health2" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
 			$(".healthbar2").append(healthbar);
 
-			// Move image of character to arena
+			// Move image of character to arena 2nd column
 
 			var pick = $('<button class="char" id="char2">').html(character.image);
 			pick.attr('data-name', character.name);
@@ -270,12 +269,12 @@ $(document).ready(function(){
 			console.log(game.randCharacters);
 			
 			
-			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
+			// Creates the attack and ability buttons below the characters 2nd column
 
 			var buttonAtt = $('<button id="attack2">').text("Attack");
 			$(".but2").append(buttonAtt);
 
-			var buttonAbil = $('<button id="ability2">').text("Ability");
+			var buttonAbil = $('<button id="ability2">').text(character.ability);
 			$(".but2").append(buttonAbil);
 
 			// Computer randomly picks their character

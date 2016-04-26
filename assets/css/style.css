@@ -16,7 +16,7 @@ h2 {
 }
 
 .charSel {
-	height: 400px;
+	height: 300px;
 }
 
 /* Health Bar */
@@ -72,19 +72,24 @@ div.opponent, div.opponent2, div.opponent3 {
 #attack1, #attack2 {
 	color: black;
 	width: 50%;
+	font-size: 16px;
 	float: left;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 #ability1, #ability2 {
 	color: black;
 	width: 50%;
+	font-size: 16px;
 	float: left;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 /* Social Icons and footer */
 
-.center {
-	
+.center {	
 	margin: 0 auto;
 	text-align: center;
 }
