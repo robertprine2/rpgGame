@@ -234,13 +234,23 @@ $(document).ready(function(){
 			$(this).hide();
 
 			// Remove pick from randCharacter
-			console.log($(this).data('name'));
-			var indexOf = game.randCharacters.indexOf('"' + $(this).data('name') + '"');
+			
+			var that = this;
+			
+			var filterArraySplice = game.randCharacters.filter(function (ch) {
+				return ch.name == $(that).data('name');
+			});
+			console.log(filterArraySplice);
+			var splice = filterArraySplice[0];
+
+			var indexOf = game.randCharacters.indexOf(splice);
+			
 			console.log(indexOf);
+			
+			game.randCharacters.splice(indexOf, 1);
+
 			console.log(game.randCharacters);
-			game.randCharacters.splice($(this).data('index'), 1);
-			console.log($(this).data('index'));
-			console.log(game.randCharacters);
+			
 			
 			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
 
