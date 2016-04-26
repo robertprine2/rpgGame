@@ -93,7 +93,7 @@ $(document).ready(function(){
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
 			{
-			name: "Radioactive Santa",
+			name: "Radioactive",
 			totalHealth: 250,
 			currentHealth: 250,
 			attack: 4,
@@ -159,7 +159,6 @@ $(document).ready(function(){
 		
 			var pick = $('<button class="char">').html(character.image);
 			pick.attr('data-name', character.name);
-			
 			$(".team").append(pick);
 			$(this).hide();
 
@@ -195,7 +194,7 @@ $(document).ready(function(){
 			
 			$(".opponent").append(compChar);
 			
-			// ******How do you hide the character button based on the computers pick?
+			// How do you hide the character button based on the computers pick?
 
 			$("." + compPick.name).hide();
 
@@ -225,10 +224,17 @@ $(document).ready(function(){
 			// Move image of character to arena
 
 			var pick = $('<button class="char">').html(character.image);
+			pick.attr('data-name', character.name);
 			$(".team2").append(pick);
 			$(this).hide();
+
+			// Remove pick from randCharacter
+
+			game.randCharacters.splice($(this).data('index'), 1);
+
+			console.log(game.randCharacters);
 			
-			// Creates the attack and ability buttons below the characters
+			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
 
 			var buttonAtt = $('<button class="attack">').text("Attack");
 			$(".but2").append(buttonAtt);
@@ -238,7 +244,9 @@ $(document).ready(function(){
 
 			// Computer randomly picks their character
 
-			var compPick = game.characters[Math.floor(Math.random() * game.characters.length)];
+			var randIndex = Math.floor(Math.random() * game.randCharacters.length);
+
+			var compPick = game.randCharacters[randIndex];
 
 			// Loads computer character's name
 
@@ -258,6 +266,14 @@ $(document).ready(function(){
 			
 
 			// ******How do you hide the character button based on the computers pick?
+
+			$("." + compPick.name).hide();
+
+			// Remove pick from randCharacter
+
+			game.randCharacters.splice(randIndex, 1);
+
+			console.log(game.randCharacters);
 
 			
 		} // End else if statement for picking the second character in arena
