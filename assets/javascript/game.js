@@ -47,7 +47,7 @@ $(document).ready(function(){
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
 			{
-			name: "Radioactive Santa",
+			name: "Radioactive",
 			totalHealth: 250,
 			currentHealth: 250,
 			attack: 4,
@@ -153,12 +153,14 @@ $(document).ready(function(){
 			// Creates the healthbars above the characters
 			
 			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+			healthbar.attr("id", "health1");
 			$(".healthbar").append(healthbar);
-
+			
 			// Move image of character to arena
 		
 			var pick = $('<button class="char">').html(character.image);
 			pick.attr('data-name', character.name);
+			pick.attr('id', 'char1');
 			$(".team").append(pick);
 			$(this).hide();
 
@@ -170,10 +172,10 @@ $(document).ready(function(){
 			
 			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
 
-			var buttonAtt = $('<button class="attack">').text("Attack");
+			var buttonAtt = $('<button id="attack1">').text("Attack");
 			$(".but").append(buttonAtt);
 
-			var buttonAbil = $('<button class="ability">').text("Ability");
+			var buttonAbil = $('<button id="ability1">').text("Ability");
 			$(".but").append(buttonAbil);
 
 			
@@ -189,24 +191,24 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena
 
-			var compChar = $('<button class="char">').html(compPick.imageComp);
+			var compChar = $('<button id="char3">').html(compPick.imageComp);
 			compChar.attr('data-name', compPick.name);
 			
 			$(".opponent").append(compChar);
 			
-			// How do you hide the character button based on the computers pick?
+			// Hides the character button based on the computer pick
 
 			$("." + compPick.name).hide();
 
 			// Remove pick from randCharacter
 
 			game.randCharacters.splice(randIndex, 1);
-
+			console.log(randIndex);
 			console.log(game.randCharacters);
 
 			// Loads Computer character's healthbars
 
-			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" id="health3" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp").append(healthbarComp);
 
 		} //end of if statement for which part of the arena to put characters in
@@ -218,12 +220,12 @@ $(document).ready(function(){
 
 			// Creates the healthbars above the characters
 			
-			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+			var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" id="health2" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
 			$(".healthbar2").append(healthbar);
 
 			// Move image of character to arena
 
-			var pick = $('<button class="char">').html(character.image);
+			var pick = $('<button id="char2">').html(character.image);
 			pick.attr('data-name', character.name);
 			$(".team2").append(pick);
 			$(this).hide();
@@ -231,15 +233,15 @@ $(document).ready(function(){
 			// Remove pick from randCharacter
 
 			game.randCharacters.splice($(this).data('index'), 1);
-
+			console.log($(this).data('index'));
 			console.log(game.randCharacters);
 			
 			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
 
-			var buttonAtt = $('<button class="attack">').text("Attack");
+			var buttonAtt = $('<button id="attack2">').text("Attack");
 			$(".but2").append(buttonAtt);
 
-			var buttonAbil = $('<button class="ability">').text("Ability");
+			var buttonAbil = $('<button id="ability2">').text("Ability");
 			$(".but2").append(buttonAbil);
 
 			// Computer randomly picks their character
@@ -254,25 +256,25 @@ $(document).ready(function(){
 
 			// Loads Computer character's healthbars
 
-			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" id="health4" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp2").append(healthbarComp);
 
 			// Computer puts their character in arena
 
-			var compChar2 = $('<button class="char">').html(compPick.imageComp);
+			var compChar2 = $('<button id="char4">').html(compPick.imageComp);
 
 			
 			$(".opponent2").append(compChar2);
 			
 
-			// ******How do you hide the character button based on the computers pick?
+			// Hides the button based on computer pick
 
 			$("." + compPick.name).hide();
 
 			// Remove pick from randCharacter
 
-			game.randCharacters.splice(randIndex, 1);
-
+			// game.randCharacters.splice(randIndex, 1);
+			
 			console.log(game.randCharacters);
 
 			
@@ -285,7 +287,7 @@ $(document).ready(function(){
 			$(this).addClass("target");
 
 			// console.log(character.name);
-			// console.log($(this).data('name'));
+			// console.log($(this).data('name')
 			var that = this;
 			
 			var filterArray = game.characters.filter(function (ch) {
@@ -297,20 +299,24 @@ $(document).ready(function(){
 			console.log(game.target);
 		});
 
-		// ******Attacks the TARGET
+		// ******Char1 Attacks the TARGET
+		
+		var char1 = $("#char1").data("name");
 
-		$(".attack").on("click", function() {
+		console.log(char1);
+
+		$("#attack1").on("click", function() {
 			
 			game.target.currentHealth = game.target.currentHealth - character.attack;
 			character.attack = character.attack + 6;
 			console.log(game.target.currentHealth);
 
-			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
+			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + game.target.currentHealth + '/' + game.target.totalHealth + '</div></div>');
 			$(".healthbarComp").html(healthbarComp);
 
-			$(".compHealth").css("width", (compPick.currentHealth / compPick.totalHealth *100) + "%");
+			$(".compHealth").css("width", (game.target.currentHealth / game.target.totalHealth *100) + "%");
 
-			if (compPick.currentHealth <= 0) {
+			if (game.target.currentHealth <= 0) {
 				$(".opponent").empty();
 				$(".but").empty();
 
