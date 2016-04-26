@@ -12,6 +12,16 @@ $(document).ready(function(){
 
 		clicks: 0,
 
+		// Variables to hide attack button so chars take turns
+
+		attackClickChar1: 0,
+
+		attackClickChar2: 0,
+
+		// Variable for computer turn
+
+		compTurn: 0,
+
 		// Variable to allow targeting for the player
 
 		target: "",
@@ -283,16 +293,16 @@ $(document).ready(function(){
 
 			var compPick = game.randCharacters[randIndex];
 
-			// Loads computer character's name
+			// Loads computer character's name 4th column
 
 			$(".compName2").append('<p>' + compPick.name + '</p>');
 
-			// Loads Computer character's healthbars
+			// Loads Computer character's healthbars 4th column
 
 			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health bar" id="health4" role="progresbar">' + compPick.currentHealth + '/' + compPick.totalHealth + '</div></div>');
 			$(".healthbarComp2").append(healthbarComp);
 
-			// Computer puts their character in arena
+			// Computer puts their character in arena 4th column
 
 			var compChar2 = $('<button class="char" id="char4">').html(compPick.imageComp);
 
@@ -311,7 +321,7 @@ $(document).ready(function(){
 			console.log(game.randCharacters);
 
 			
-		} // End else if statement for picking the second character in arena
+		} // End else if statement for picking the second character in arena click 2
 
 		//Targets a character for attacking or using abilities
 
@@ -342,58 +352,187 @@ $(document).ready(function(){
 		console.log(filterArray1);
 		var char1 = filterArray1[0];
 
+		//assigns the character's object in the char2 id
+
+		var filterArray2 = game.characters.filter(function (ch) {
+			return ch.name == $("#char2").data("name");
+		});
+		console.log(filterArray2);
+		var char2 = filterArray2[0];
+
+		//assigns the character's object in the char3 id
+
+		var filterArray3 = game.characters.filter(function (ch) {
+			return ch.name == $("#char3").data("name");
+		});
+		console.log(filterArray3);
+		var char3 = filterArray3[0];
+
+		//assigns the character's object in the char4 id
+
+		var filterArray4 = game.characters.filter(function (ch) {
+			return ch.name == $("#char4").data("name");
+		});
+		console.log(filterArray4);
+		var char4 = filterArray4[0];
+
 		$("#attack1").on("click", function() {
 			
-			game.target.currentHealth = game.target.currentHealth - char1.attack;
-			char1.attack = char1.attack + 6;  //I have to make this go back to the actual array maybe?
-			console.log(game.target.currentHealth);
+			// if statement to take turns for each character
 
-			// How do I update the healthbar now?
+			if (game.attackClick1 < 1) {
 
-			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + game.target.currentHealth + '/' + game.target.totalHealth + '</div></div>');
-			$(".healthbarComp").html(healthbarComp);
+				//changes attackclick variables to make players take turns
 
-			$(".compHealth").css("width", (game.target.currentHealth / game.target.totalHealth *100) + "%");
+				game.attackClick1++;
+				game.attackClick2 = 0;
 
-			if (game.target.currentHealth <= 0) {
-				$(".opponent").empty();
-				$(".but").empty();
+				console.log(game.attackClick1);
+				console.log(game.attackClick2);
 
-				$(".opponent").fadeIn("slow", function() {
-					$(".opponent").text("You Win!");
-				});
-			}
+				// variable that makes it so defense higher than attacks don't heal a player
+
+				var max = Math.max(0, (char1.attack - game.target.defense));
+
+				//Takes damage off of target's current health
+
+				game.target.currentHealth = game.target.currentHealth - (max);
+				char1.attack = char1.attack + 6;  
+				console.log(game.target.currentHealth);
+
+				// How do I update the healthbar now? I need the id of the target
+
+				var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + game.target.currentHealth + '/' + game.target.totalHealth + '</div></div>');
+				$(".healthbarComp").html(healthbarComp);
+
+				$(".compHealth").css("width", (game.target.currentHealth / game.target.totalHealth *100) + "%");
+
+				// if statement for both opponents KedO: You win!
+
+				if (char3.currentHealth <= 0 && char4.currentHealth <= 0) {
+					$(".charSel").html("<p>You won!</p>")
+				} //end if both opponents KO
+
+				//****** How do I reference which char3 or char4 died using target? -- if statement for one opponent being knocked out
+
+				if (game.target.currentHealth <= 0) {
+					$(".opponent").empty();
+					
+					$(".opponent").fadeIn("slow", function() {
+						$(".opponent").text("KO!");
+					});
+				} //end if opponent KO
+
+				else {
+
+					// variable that makes it so defense higher than attacks don't heal a player
+
+					var max = Math.max(0, (game.target.counterAttack - char1.defense));
+
+					char1.currentHealth = char1.currentHealth - max;
+
+					// *******Adjust healthbar to new numbers
+
+					var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+					$(".healthbar").html(healthbar);
+					$(".health").css("width", (character.currentHealth / character.totalHealth * 100) + "%");
+
+					// if a character gets knocked out
+
+					if (character.currentHealth <= 0) {
+						$(".team").empty();
+						$(".but").empty();
+						$(".team").fadeIn("slow", function() {
+							$(".team").text("Oh no! This character is knocked out!");
+						});
+					} //end if you die
+
+					// *****if statement both characters are dead you lose
+
+					if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
+						$(".charSel").html("<p>You lost!</p>")
+					}
+
+					// ******Decide which computer's turn it is
+
+					if (game.compTurn <= 0) {
+
+						game.compTurn++
+
+						//******Computer chooses the lowest health player character
+
+						if (char1.currentHealth >= char2.currentHealth) {
+
+							// ******Computer chooses to use an ability or attack
+
+							if (char3.mana >= 10) {
+
+								// *******USE ABILITY
+
+							} //end if statement about using ability
+
+							else {
+
+							// ******Computer uses attack
+
+							
+
+							} //end else statement about using attack
+
+						} // End if statement on comp choosing lowest health target
+
+					} //End if statement about which comp character's turn it is
+
+					else {
+
+						game.compTurn = 0;
+
+						//********copy all the if compturn junk in here and modify for char4
+
+					} //End else statement about which comp character's turn it is
+
+					// *******Adjust player's healthbar to new numbers
+
+					var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
+					$(".healthbar").html(healthbar);
+					$(".health").css("width", (character.currentHealth / character.totalHealth * 100) + "%");
+
+					// if a character gets knocked out
+
+					if (character.currentHealth <= 0) {
+						$(".team").empty();
+						$(".but").empty();
+						$(".team").fadeIn("slow", function() {
+							$(".team").text("Oh no! This character is knocked out!");
+						});
+					} //end if you die
+
+					// if statement both characters are dead you lose
+
+					if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
+						$(".charSel").html("<p>You lost!</p>")
+					} //end if you lost
+
+				} // end of else counter attack/computer turn
+
+			} //end of if attack click value - hide or attack
 
 			else {
-				character.currentHealth = character.currentHealth - game.target.counterAttack;
-
-				var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
-				$(".healthbar").html(healthbar);
-				$(".health").css("width", (character.currentHealth / character.totalHealth * 100) + "%");
-
-				if (character.currentHealth <= 0) {
-					$(".team").empty();
-					$(".but").empty();
-					$(".team").fadeIn("slow", function() {
-						$(".team").text("You Lose!");
-					});
-				}
+				
+				alert("Don't forget to use your other character as well. It's their turn.")
 
 			}
-		});
 
-		
+		}); // End of attack1 click
 
-	});
+		// char2 button attack on click
+
+	}); //end of pick character click
 
 	// Player clicks a button to perform a task This happens until a group of characters is knocked out
 
 
 
 	// Computer randomly chooses attack or ability
-
-	// If you beat other characters, you win
-
-	// If the computer beats you, you lose
 
 }); //ends ready function
