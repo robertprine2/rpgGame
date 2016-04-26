@@ -69,13 +69,13 @@ div.opponent, div.opponent2, div.opponent3 {
 
 }
 
-.attack {
+#attack1, #attack2 {
 	color: black;
 	width: 50%;
 	float: left;
 }
 
-.ability {
+#ability1, #ability2 {
 	color: black;
 	width: 50%;
 	float: left;

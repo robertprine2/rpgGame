@@ -191,7 +191,7 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena
 
-			var compChar = $('<button id="char3">').html(compPick.imageComp);
+			var compChar = $('<button class="char" id="char3">').html(compPick.imageComp);
 			compChar.attr('data-name', compPick.name);
 			
 			$(".opponent").append(compChar);
@@ -225,7 +225,7 @@ $(document).ready(function(){
 
 			// Move image of character to arena
 
-			var pick = $('<button id="char2">').html(character.image);
+			var pick = $('<button class="char" id="char2">').html(character.image);
 			pick.attr('data-name', character.name);
 			$(".team2").append(pick);
 			$(this).hide();
@@ -261,7 +261,7 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena
 
-			var compChar2 = $('<button id="char4">').html(compPick.imageComp);
+			var compChar2 = $('<button class="char" id="char4">').html(compPick.imageComp);
 
 			
 			$(".opponent2").append(compChar2);
@@ -300,16 +300,20 @@ $(document).ready(function(){
 		});
 
 		// ******Char1 Attacks the TARGET
-		
-		var char1 = $("#char1").data("name");
 
-		console.log(char1);
+		var filterArray = game.characters.filter(function (ch) {
+			return ch.name == $("#char1").data("name");
+		});
+		console.log(filterArray);
+		var char1 = filterArray[0];
 
 		$("#attack1").on("click", function() {
 			
-			game.target.currentHealth = game.target.currentHealth - character.attack;
-			character.attack = character.attack + 6;
+			game.target.currentHealth = game.target.currentHealth - char1.attack;
+			char1.attack = char1.attack + 6;  //I have to make this go back to the actual array maybe?
 			console.log(game.target.currentHealth);
+
+			// How do I update the healthbar now?
 
 			var healthbarComp = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + game.target.currentHealth + '/' + game.target.totalHealth + '</div></div>');
 			$(".healthbarComp").html(healthbarComp);
