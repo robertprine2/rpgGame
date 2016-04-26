@@ -13,7 +13,8 @@ $(document).ready(function(){
 		target: "",
 
 		characters : 
-			[{
+			[
+			Jack = {
 			name: "Jack",
 			totalHealth: 200,
 			currentHealth: 200,
@@ -26,7 +27,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
-			{
+			Spike = {
 			name: "Spike",
 			totalHealth: 400,
 			currentHealth: 400,
@@ -36,7 +37,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
 
-			{
+			Respite = {
 			name: "Respite", 
 			totalHealth: 200,
 			currentHealth: 200,
@@ -46,7 +47,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
-			{
+			Radioactive = {
 			name: "Radioactive",
 			totalHealth: 250,
 			currentHealth: 250,
@@ -59,7 +60,8 @@ $(document).ready(function(){
 		// Copy of characters for computer to pick and splice from
 
 		randCharacters : 
-			[{
+			[
+			Jack = {
 			name: "Jack",
 			totalHealth: 200,
 			currentHealth: 200,
@@ -72,7 +74,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/jackR.png'>",
 			imageComp: "<img class='pixelPic' src='assets/images/jackL.png'>"},
 
-			{
+			Spike = {
 			name: "Spike",
 			totalHealth: 400,
 			currentHealth: 400,
@@ -82,7 +84,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/spikeR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/spikeL.jpg'>"},
 
-			{
+			Respite = {
 			name: "Respite", 
 			totalHealth: 200,
 			currentHealth: 200,
@@ -92,7 +94,7 @@ $(document).ready(function(){
 			image: "<img class='pixelPic' src='assets/images/respiteR.jpg'>",
 			imageComp: "<img class='pixelPic' src='assets/images/respiteL.jpg'>"},
 
-			{
+			Radioactive = {
 			name: "Radioactive",
 			totalHealth: 250,
 			currentHealth: 250,
@@ -115,6 +117,7 @@ $(document).ready(function(){
 				// c.attr('data-attack', game.characters[i].attack);
 				//****INSANELY AWESOME!!!!!
 				c.attr('data-index', i); 
+				c.attr('data-name', game.characters[i].name);
 				c.html(game.characters[i].image);
 
 				$(".charSel").append(c);
@@ -231,7 +234,10 @@ $(document).ready(function(){
 			$(this).hide();
 
 			// Remove pick from randCharacter
-
+			console.log($(this).data('name'));
+			var indexOf = game.randCharacters.indexOf('"' + $(this).data('name') + '"');
+			console.log(indexOf);
+			console.log(game.randCharacters);
 			game.randCharacters.splice($(this).data('index'), 1);
 			console.log($(this).data('index'));
 			console.log(game.randCharacters);
@@ -301,11 +307,13 @@ $(document).ready(function(){
 
 		// ******Char1 Attacks the TARGET
 
-		var filterArray = game.characters.filter(function (ch) {
+		//assigns the character's object in the char1 id
+
+		var filterArray1 = game.characters.filter(function (ch) {
 			return ch.name == $("#char1").data("name");
 		});
-		console.log(filterArray);
-		var char1 = filterArray[0];
+		console.log(filterArray1);
+		var char1 = filterArray1[0];
 
 		$("#attack1").on("click", function() {
 			
