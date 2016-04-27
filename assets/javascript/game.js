@@ -206,7 +206,7 @@ $(document).ready(function(){
 
 			console.log(game.randCharacters);
 			
-			// *******change .text ability to character.ability--Creates the attack and ability buttons below the characters
+			// Creates the attack and ability buttons below the characters
 
 			var buttonAtt = $('<button id="attack1">').text("Attack");
 			$(".but").append(buttonAtt);
@@ -226,14 +226,14 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena 3rd column
 
-			var compChar = $('<button class="char" id="char3">').html(compPick.imageComp);
-			compChar.attr('data-name', compPick.name);
+			// var compChar = $('<button class="char" id="char3">').html(compPick.imageComp);
+			// compChar.attr('data-name', compPick.name);
 			
-			$(".opponent").append(compChar);
+			// $(".opponent").append(compChar);
 			
-			// Hides the character button based on the computer pick
+			// // Hides the character button based on the computer pick
 
-			$("." + compPick.name).hide();
+			// $("." + compPick.name).hide();
 
 			// Remove pick from randCharacter
 
@@ -260,10 +260,14 @@ $(document).ready(function(){
 
 			// Move image of character to arena 2nd column
 
-			var pick = $('<button class="char" id="char2">').html(character.image);
-			pick.attr('data-name', character.name);
-			$(".team2").append(pick);
-			$(this).hide();
+			var pick = this;
+			$(pick).appendTo("#char2");
+			console.log(pick);
+
+			// var pick = $('<button class="char" id="char2">').html(character.image);
+			// pick.attr('data-name', character.name);
+			// $(".team2").append(pick);
+			// $(this).hide();
 
 			// Remove pick from randCharacter
 			
@@ -351,11 +355,14 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char1 id
 
-		var filterArray1 = game.characters.filter(function (ch) {
-			return ch.name == $("#char1").data("name");
-		});
-		console.log(filterArray1);
-		var char1 = filterArray1[0];
+		var char1 = game.characters[$("#char1").data("index")];
+		console.log(char1);
+
+		// var filterArray1 = game.characters.filter(function (ch) {
+		// 	return ch.name == $("#char1").data("name");
+		// });
+		// console.log(filterArray1);
+		// var char1 = filterArray1[0];
 
 		//assigns the character's object in the char2 id
 
@@ -387,19 +394,19 @@ $(document).ready(function(){
 		$("#attack1").on("click", function() {
 			
 			// if statement to take turns for each character
-
-			if (game.attackClick1 < 1) {
+			
+			if (game.attackClickChar1 < 1) {
 
 				//changes attackclick variables to make players take turns
 
-				game.attackClick1++;
-				game.attackClick2 = 0;
+				game.attackClickChar1++;
+				game.attackClickChar2 = 0;
 
-				console.log(game.attackClick1);
-				console.log(game.attackClick2);
+				console.log(game.attackClickChar1);
+				console.log(game.attackClickChar2);
 
 				// variable that makes it so defense higher than attacks don't heal a player
-
+				console.log(this);
 				var max = Math.max(0, (char1.attack - game.target.defense));
 
 				//Takes damage off of target's current health
@@ -527,7 +534,7 @@ $(document).ready(function(){
 
 			else {
 				
-				alert("Don't forget to use your other character as well. It's their turn.")
+				$(".charSel").html("Don't forget to use your other character as well. It's their turn.");
 
 			}
 
