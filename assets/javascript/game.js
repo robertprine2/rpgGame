@@ -191,6 +191,7 @@ $(document).ready(function(){
 			// Move image of char1 to arena (first column)
 		
 			var pick = this;
+			$(pick).addClass("char1")
 			$(pick).appendTo("#char1");
 		
 			console.log(pick);
@@ -226,7 +227,7 @@ $(document).ready(function(){
 			console.log(compPick);
 
 			// Create character name for computer 3rd column
-
+			$(compPick).addClass("char3");
 			$(".compName").append('<p>' + compPick.name + '</p>');
 
 			// Computer puts their character in arena 3rd column
@@ -267,6 +268,7 @@ $(document).ready(function(){
 			// Move image of character to arena 2nd column
 
 			var pick = this;
+			$(pick).addClass("char2");
 			$(pick).appendTo("#char2");
 			console.log(pick);
 
@@ -329,6 +331,7 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena 4th column
 
+			$(compPick).addClass("char4");
 			$(compPick).appendTo('#char4');
 
 			// Remove pick from randCharacter
@@ -368,8 +371,9 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char1 id
 
-		var char1 = game.characters[$(".char-button").data("index")];
-		console.log($(".char-button").data("index"));
+		var char1 = game.characters[$(".char1").data("index")];
+		console.log($(".char1").data("index"));
+		console.log(char1);
 
 		// var filterArray1 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char1").data("name");
@@ -379,23 +383,32 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char2 id
 
-		var filterArray2 = game.characters.filter(function (ch) {
-			return ch.name == $("#char2").data("name");
-		});
-		console.log(filterArray2);
-		var char2 = filterArray2[0];
+		var char2 = game.characters[$(".char2").data("index")];
+		console.log($(".char2").data("index"));
+		console.log(char2);
+
+		// var filterArray2 = game.characters.filter(function (ch) {
+		// 	return ch.name == $("#char2").data("name");
+		// });
+		// console.log(filterArray2);
+		// var char2 = filterArray2[0];
 
 		//assigns the character's object in the char3 id
 
-		var filterArray3 = game.characters.filter(function (ch) {
-			return ch.name == $("#char3").data("name");
-		});
-		console.log(filterArray3);
-		var char3 = filterArray3[0];
+		var char3 = game.characters[$(".char3").data("index")];
+		console.log($(".char3").data("index"));
+		console.log(char3);
+
+		// var filterArray3 = game.characters.filter(function (ch) {
+		// 	return ch.name == $("#char3").data("name");
+		// });
+		// console.log(filterArray3);
+		// var char3 = filterArray3[0];
 
 		//assigns the character's object in the char4 id
 
-		var char4 = game.randCharacters[0];
+		var char4 = game.characters[$(".char4").data("index")];
+		console.log($(".char4").data("index"));
 		console.log(char4);
 
 		// var filterArray4 = game.characters.filter(function (ch) {
