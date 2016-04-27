@@ -16,7 +16,13 @@ h2 {
 }
 
 .charSel {
-	height: 300px;
+	height: 200px;
+}
+
+.charSel p {
+	margin-top: 75px;
+	font-size: 50px;
+	color: red;
 }
 
 /* Health Bar */
