@@ -189,11 +189,16 @@ $(document).ready(function(){
 			
 			// Move image of char1 to arena (first column)
 		
-			var pick = $('<button class="char">').html(character.image);
-			pick.attr('data-name', character.name);
-			pick.attr('id', 'char1');
-			$(".team").append(pick);
-			$(this).hide();
+			var pick = this;
+			$(pick).appendTo("#char1");
+		
+			console.log(pick);
+
+			// var pick = $('<button class="char">').html(character.image);
+			// pick.attr('data-name', character.name);
+			// pick.attr('id', 'char1');
+			// $(".team").append(pick);
+			// $(this).hide();
 
 			// Remove pick from randCharacter (no multiple characters)
 
