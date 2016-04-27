@@ -229,8 +229,6 @@ $(document).ready(function(){
 			$(".compName").append('<p>' + compPick.name + '</p>');
 
 			// Computer puts their character in arena 3rd column
-			console.log(randIndex);
-			console.log('.char-button[data-index='+ randIndex +']');
 
 			$(compPick).appendTo('#char3');
 
@@ -275,23 +273,27 @@ $(document).ready(function(){
 			// $(".team2").append(pick);
 			// $(this).hide();
 
+			// Adds selected class so that computer doesn't randomly pick the same characters as the player
+
+			$(pick).addClass("selected");
+			
 			// Remove pick from randCharacter
-			
-			var that = this;
-			
-			var filterArraySplice = game.randCharacters.filter(function (ch) {
-				return ch.name == $(that).data('name');
-			});
-			console.log(filterArraySplice);
-			var splice = filterArraySplice[0];
 
-			var indexOf = game.randCharacters.indexOf(splice);
+			// var that = this;
 			
-			console.log(indexOf);
-			
-			game.randCharacters.splice(indexOf, 1);
+			// var filterArraySplice = game.randCharacters.filter(function (ch) {
+			// 	return ch.name == $(that).data('name');
+			// });
+			// console.log(filterArraySplice);
+			// var splice = filterArraySplice[0];
 
-			console.log(game.randCharacters);
+			// var indexOf = game.randCharacters.indexOf(splice);
+			
+			// console.log(indexOf);
+			
+			// game.randCharacters.splice(indexOf, 1);
+
+			// console.log(game.randCharacters);
 			
 			
 			// Creates the attack and ability buttons below the characters 2nd column
@@ -304,9 +306,15 @@ $(document).ready(function(){
 
 			// Computer randomly picks their character
 
-			var randIndex = Math.floor(Math.random() * game.randCharacters.length);
+			// Computer randomly picks their character
 
-			var compPick = game.randCharacters[randIndex];
+			var compPickArray = $('.char-button:not(.selected)');
+
+			var randIndex = Math.floor(Math.random() * compPickArray.length);
+
+			var compPick = compPickArray[randIndex];
+
+			console.log(compPick);
 
 			// Loads computer character's name 4th column
 
@@ -319,21 +327,11 @@ $(document).ready(function(){
 
 			// Computer puts their character in arena 4th column
 
-			var compChar2 = $('<button class="char" id="char4">').html(compPick.imageComp);
-
-			
-			$(".opponent2").append(compChar2);
-			
-
-			// Hides the button based on computer pick
-
-			$("." + compPick.name).hide();
+			$(compPick).appendTo('#char4');
 
 			// Remove pick from randCharacter
 
 			// game.randCharacters.splice(randIndex, 1);
-			
-			console.log(game.randCharacters);
 
 			
 		} // End else if statement for picking the second character in arena click 2
