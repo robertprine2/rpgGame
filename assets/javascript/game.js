@@ -200,11 +200,9 @@ $(document).ready(function(){
 			// $(".team").append(pick);
 			// $(this).hide();
 
-			// Remove pick from randCharacter (no multiple characters)
+			// Adds selected class so that computer doesn't randomly pick the same characters as the player
 
-			game.randCharacters.splice($(this).data('index'), 1);
-
-			console.log(game.randCharacters);
+			$(pick).addClass("selected");
 			
 			// Creates the attack and ability buttons below the characters
 
@@ -216,15 +214,25 @@ $(document).ready(function(){
 
 			// Computer randomly picks their character
 
-			var randIndex = Math.floor(Math.random() * game.randCharacters.length);
+			console.log($('.char-button:not(.selected)'));
 
-			var compPick = game.randCharacters[randIndex];
+			var compPickArray = $('.char-button:not(.selected)');
+
+			var randIndex = Math.floor(Math.random() * compPickArray.length);
+
+			var compPick = compPickArray[randIndex];
+
+			console.log(compPick);
 
 			// Create character name for computer 3rd column
 
 			$(".compName").append('<p>' + compPick.name + '</p>');
 
 			// Computer puts their character in arena 3rd column
+			console.log(randIndex);
+			console.log('.char-button[data-index='+ randIndex +']');
+
+			$(compPick).appendTo('#char3');
 
 			// var compChar = $('<button class="char" id="char3">').html(compPick.imageComp);
 			// compChar.attr('data-name', compPick.name);
@@ -235,11 +243,9 @@ $(document).ready(function(){
 
 			// $("." + compPick.name).hide();
 
-			// Remove pick from randCharacter
+			// Adds selected class so that computer doesn't randomly pick the same characters as the player
 
-			game.randCharacters.splice(randIndex, 1);
-			console.log(randIndex);
-			console.log(game.randCharacters);
+			$(compPick).addClass("selected");
 
 			// Loads Computer character's healthbars 3rd column
 
@@ -355,8 +361,8 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char1 id
 
-		var char1 = game.characters[$("#char1").data("index")];
-		console.log(char1);
+		var char1 = game.characters[$(".char-button").data("index")];
+		console.log($(".char-button").data("index"));
 
 		// var filterArray1 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char1").data("name");
