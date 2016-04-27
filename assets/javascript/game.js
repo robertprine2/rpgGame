@@ -370,11 +370,14 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char4 id
 
-		var filterArray4 = game.characters.filter(function (ch) {
-			return ch.name == $("#char4").data("name");
-		});
-		console.log(filterArray4);
-		var char4 = filterArray4[0];
+		var char4 = game.randCharacters[0];
+		console.log(char4);
+
+		// var filterArray4 = game.characters.filter(function (ch) {
+		// 	return ch.name == $("#char4").data("name");
+		// });
+		// console.log(filterArray4);
+		// var char4 = filterArray4[0];
 
 		$("#attack1").on("click", function() {
 			
