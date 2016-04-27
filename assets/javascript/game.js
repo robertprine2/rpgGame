@@ -144,6 +144,7 @@ $(document).ready(function(){
 				// c.attr('data-currentHealth', game.characters[i].currentHealth);
 				// c.attr('data-attack', game.characters[i].attack);
 				//****INSANELY AWESOME!!!!!
+				c.addClass("char");
 				c.attr('data-index', i); 
 				c.attr('data-name', game.characters[i].name);
 				c.html(game.characters[i].image);
@@ -253,6 +254,7 @@ $(document).ready(function(){
 		} //end of if statement for 1 click
 
 		else if (game.clicks == 2) {
+
 			// Create 2nd player character name 2nd column
 
 			$(".name2").append('<p>' + character.name + '</p>');
@@ -333,12 +335,18 @@ $(document).ready(function(){
 
 			// game.randCharacters.splice(randIndex, 1);
 
-			
+			console.log(game.clicks);
 		} // End else if statement for picking the second character in arena click 2
 
 		//Targets a character for attacking or using abilities
 
 		$(".char").on("click", function() {
+
+			// if statement to not target on second click
+
+			if (game.clicks >= 3) {
+
+
 			$(".target").removeClass("target");
 			$(this).addClass("target");
 
@@ -353,6 +361,7 @@ $(document).ready(function(){
 			game.target = filterArray[0];
 
 			console.log(game.target);
+			}
 		});
 
 		// ******Char1 Attacks the TARGET
