@@ -25,7 +25,11 @@ h2 {
 	color: red;
 }
 
-/* Health Bar */
+/* Health Bar and Mana */
+
+.mana {
+	color: lightblue;
+}
 
 .progress {
 	background-color: red;
