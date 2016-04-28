@@ -542,7 +542,7 @@ $(document).ready(function(){
 
 				// Update progress bar to match % health left
 
-				$(".healthbar").css("width", (game.char1.currentHealth / game.char1.totalHealth *100) + "%");
+				$(".healthbar").css("width", (char1.currentHealth / char1.totalHealth *100) + "%");
 
 					// if a character gets knocked out
 
