@@ -1,4 +1,5 @@
 //waits for js to start until after html has loaded
+var char1, char2, char3, char4;
 
 $(document).ready(function(){
 
@@ -353,8 +354,6 @@ $(document).ready(function(){
 			$(".target").removeClass("target");
 			$(this).addClass("target");
 
-			// console.log(character.name);
-			// console.log($(this).data('name')
 			var that = this;
 			
 			var filterArray = game.characters.filter(function (ch) {
@@ -371,7 +370,7 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char1 id
 
-		var char1 = game.characters[$(".char1").data("index")];
+		char1 = game.characters[$(".char1").data("index")];
 		console.log($(".char1").data("index"));
 		console.log(char1);
 
@@ -383,7 +382,8 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char2 id
 
-		var char2 = game.characters[$(".char2").data("index")];
+		char2 = game.characters[$(".char2").data("index")];
+
 		console.log($(".char2").data("index"));
 		console.log(char2);
 
@@ -395,7 +395,7 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char3 id
 
-		var char3 = game.characters[$(".char3").data("index")];
+		char3 = game.characters[$(".char3").data("index")];
 		console.log($(".char3").data("index"));
 		console.log(char3);
 
@@ -407,7 +407,7 @@ $(document).ready(function(){
 
 		//assigns the character's object in the char4 id
 
-		var char4 = game.characters[$(".char4").data("index")];
+		char4 = game.characters[$(".char4").data("index")];
 		console.log($(".char4").data("index"));
 		console.log(char4);
 
@@ -421,6 +421,9 @@ $(document).ready(function(){
 
 		$("#attack1").on("click", function() {
 			
+			console.log('=========');
+			console.log('attack');
+			console.log(char1, char2,char3,char4)
 			// Clear p tag to remove messages
 
 			$(".charSel").html("<p></p>");
@@ -446,6 +449,11 @@ $(document).ready(function(){
 				//Takes damage off of target's current health
 
 				game.target.currentHealth = game.target.currentHealth - (max);
+
+				// Write in charSel using .html (first time for this run through) what happened damage wise
+
+				$(".charSel").html(char1.name + ' attacked for ' + max + ' through ' + game.target.name + "'s defense!");
+
 				char1.attack = char1.attack + 6;  
 				console.log(game.target.currentHealth);
 
@@ -534,6 +542,8 @@ $(document).ready(function(){
 
 					char1.currentHealth = char1.currentHealth - max;
 
+					$(".charSel").append(game.target.name + ' counterattacked for ' + max + ' through' + char1.name + "'s defense!");
+
 					// Update the health numbers to match the new health
 
 				var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
@@ -562,22 +572,28 @@ $(document).ready(function(){
 					}
 
 					// Decide which computer's turn it is
-
+					console.log(char2, char1)
 					if (game.compTurn <= 0) {
 
 						game.compTurn++
 
-						//******Computer chooses the lowest health player character
+						// Computer chooses the lowest health player character
 
 						if (char1.currentHealth >= char2.currentHealth) {
 
-							// ******Computer chooses to use an ability or attack
+							// Computer chooses to use an ability or attack
 
 							if (char3.mana >= 10) {
 
-								// *******USE ABILITY
+								// USE ABILITY
 
 								if (char3.ability == "Quick Strike") {
+									
+									// Decrease mana by 10 when using an ability
+
+									char3.mana = char3.mana - 10;
+									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
 									// variable that makes it so defense higher than attacks don't heal a player
 							
 									var max = Math.max(0, (char3.attack * 3 - char2.defense * 3));
@@ -585,6 +601,11 @@ $(document).ready(function(){
 									//Takes damage off of target's current health
 
 									char2.currentHealth = char2.currentHealth - (max);
+
+									// States what target is doing in the charSel section
+
+									$(".charSel").append(char3.name + ' dealt ' + max + ' through' + game.target.name + "'s defense with Quick Strike!");
+
 									char3.attack = char3.attack + 18;  
 									console.log(game.target.currentHealth);
 
@@ -622,12 +643,36 @@ $(document).ready(function(){
 								} // End if Quick Strike
 
 								if (char3.ability == "Intimidate") {
+									
+									// Decrease mana by 10 when using an ability
+
+									char3.mana = char3.mana - 10;
+									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
 									char2.attack = 0;
+
+									// States what the character is doing in the charSel section
+
+									$(".charSel").append(char3.name + ' intimidated ' + char2.name + "!");
+
 								} // End of ability intimidate
 
 								if (char3.ability == "Heal") {
+
+									// Decrease mana by 10 when using an ability
+
+									char3.mana = char3.mana - 10;
+									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
 									if (char3.currentHealth <= char4.currentHealth) {
-										char3.currentHealth = char3.currentHealth + 100;
+
+										var min = Math.min(char3.totalHealth, (char3.currentHealth + 100));
+
+										char3.currentHealth = min;
+
+										// States what the character is doing in the charSel section
+
+										$(".charSel").append(char3.name + ' healed herself for ' + min + ' !');
 
 										// Update the health numbers to match the new health
 
@@ -643,7 +688,13 @@ $(document).ready(function(){
 
 									else {
 
-										char4.currentHealth = char4.currentHealth + 100;
+										var min = Math.min(char4.totalHealth, (char4.currentHealth + 100));
+
+										char4.currentHealth = min;
+
+										// States what the character is doing in the charSel section
+
+										$(".charSel").append(char3.name + ' healed ' + char4.name + ' for ' + min + ' !');
 
 										// Update the health numbers to match the new health
 
@@ -659,6 +710,16 @@ $(document).ready(function(){
 								} // End of ability heal
 
 								if (char3.ability == "Radiation") {
+
+									// Decrease mana by 10 when using an ability
+
+									char3.mana = char3.mana - 10;
+									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
+									// States what the character is doing in the charSel section
+
+									$(".charSel").append(char3.name + ' dealt 50 damage with radiation to ' + char1.name + ' and ' + char2.name + ' !');
+
 									char1.currentHealth = char1.currentHealth - 50;
 
 									// Update the health numbers to match the new health
@@ -733,9 +794,18 @@ $(document).ready(function(){
 
 								// Computer uses attack
 
+								// Increase mana by 5 on attacks
+
+								char3.mana = char3.mana + 5;
+								$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
 								// variable that makes it so defense higher than attacks don't heal a player
 							
 								var max = Math.max(0, (char3.attack - char2.defense));
+
+								// States what the character is doing in the charSel section
+
+								$(".charSel").append(char3.name + ' attacked ' + char2.name + ' for ' + max + ' damage through their defense!');
 
 								//Takes damage off of target's current health
 
@@ -784,6 +854,10 @@ $(document).ready(function(){
 									var max = Math.max(0, (char2.counterAttack - char3.defense));
 
 									char3.currentHealth = char3.currentHealth - max;
+
+									// States what the character is doing in the charSel section
+
+									$(".charSel").append(char2.name + ' counterattacked ' + char3.name + ' for ' + max + ' damage through their defense!');
 
 									// Update the health numbers to match the new health
 
@@ -870,7 +944,7 @@ $(document).ready(function(){
 
 			else {
 				
-				$(".charSel").html("<p>Don't forget to use your other character as well. It's their turn.</p>");
+				$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
 
 			} //end else take both chars turns
 
