@@ -194,8 +194,6 @@ $(document).ready(function(){
 			var pick = this;
 			$(pick).addClass("char1")
 			$(pick).appendTo("#char1");
-		
-			console.log(pick);
 
 			// var pick = $('<button class="char">').html(character.image);
 			// pick.attr('data-name', character.name);
@@ -217,15 +215,11 @@ $(document).ready(function(){
 
 			// Computer randomly picks their character
 
-			console.log($('.char-button:not(.selected)'));
-
 			var compPickArray = $('.char-button:not(.selected)');
 
 			var randIndex = Math.floor(Math.random() * compPickArray.length);
 
 			var compPick = compPickArray[randIndex];
-
-			console.log(compPick);
 
 			// Create character name for computer 3rd column
 			$(compPick).addClass("char3");
@@ -271,7 +265,6 @@ $(document).ready(function(){
 			var pick = this;
 			$(pick).addClass("char2");
 			$(pick).appendTo("#char2");
-			console.log(pick);
 
 			// var pick = $('<button class="char" id="char2">').html(character.image);
 			// pick.attr('data-name', character.name);
@@ -289,17 +282,11 @@ $(document).ready(function(){
 			// var filterArraySplice = game.randCharacters.filter(function (ch) {
 			// 	return ch.name == $(that).data('name');
 			// });
-			// console.log(filterArraySplice);
 			// var splice = filterArraySplice[0];
 
 			// var indexOf = game.randCharacters.indexOf(splice);
 			
-			// console.log(indexOf);
-			
-			// game.randCharacters.splice(indexOf, 1);
-
-			// console.log(game.randCharacters);
-			
+			// game.randCharacters.splice(indexOf, 1);			
 			
 			// Creates the attack and ability buttons below the characters 2nd column
 
@@ -319,8 +306,6 @@ $(document).ready(function(){
 
 			var compPick = compPickArray[randIndex];
 
-			console.log(compPick);
-
 			// Loads computer character's name 4th column
 
 			$(".compName2").append('<p>' + compPick.name + '</p>');
@@ -339,7 +324,6 @@ $(document).ready(function(){
 
 			// game.randCharacters.splice(randIndex, 1);
 
-			console.log(game.clicks);
 		} // End else if statement for picking the second character in arena click 2
 
 		//Targets a character for attacking or using abilities
@@ -347,7 +331,7 @@ $(document).ready(function(){
 		$(".char").on("click", function() {
 
 			// if statement to not target on second click
-
+console.log(game.clicks);
 			if (game.clicks >= 3) {
 
 
@@ -359,83 +343,66 @@ $(document).ready(function(){
 			var filterArray = game.characters.filter(function (ch) {
 				return ch.name == $(that).data('name');
 			});
-			console.log(filterArray);
+		
 			game.target = filterArray[0];
 
-			console.log(game.target);
-			}
-		});
+			} // end if statement to not target on second click
 
-		// ******Char1 Attacks the TARGET
+		}); // End of target on click function
+
+		// Char1 Attacks the TARGET
 
 		//assigns the character's object in the char1 id
 
 		char1 = game.characters[$(".char1").data("index")];
-		console.log($(".char1").data("index"));
-		console.log(char1);
 
 		// var filterArray1 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char1").data("name");
 		// });
-		// console.log(filterArray1);
 		// var char1 = filterArray1[0];
 
 		//assigns the character's object in the char2 id
 
 		char2 = game.characters[$(".char2").data("index")];
 
-		console.log($(".char2").data("index"));
-		console.log(char2);
-
 		// var filterArray2 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char2").data("name");
 		// });
-		// console.log(filterArray2);
 		// var char2 = filterArray2[0];
 
 		//assigns the character's object in the char3 id
 
 		char3 = game.characters[$(".char3").data("index")];
-		console.log($(".char3").data("index"));
-		console.log(char3);
 
 		// var filterArray3 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char3").data("name");
 		// });
-		// console.log(filterArray3);
 		// var char3 = filterArray3[0];
 
 		//assigns the character's object in the char4 id
 
 		char4 = game.characters[$(".char4").data("index")];
-		console.log($(".char4").data("index"));
-		console.log(char4);
 
 		// var filterArray4 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char4").data("name");
 		// });
-		// console.log(filterArray4);
+
 		// var char4 = filterArray4[0];
 
 		// Attack button1 click function
 
 		$("#attack1").on("click", function() {
-			
-			console.log('=========');
-			console.log('attack');
-			console.log(char1, char2,char3,char4)
-			// Clear p tag to remove messages
-
-			$(".charSel").html("<p></p>");
 
 			// if statement to take turns for each character
 			
-			if (game.attackClickChar1 < 1) {
+			// if (game.attackClickChar1 === 0) {
 
-				//changes attackclick variables to make players take turns
+			// 	//changes attackclick variables to make players take turns
 
-				game.attackClickChar1++;
-				game.attackClickChar2 = 0;
+			// 	game.attackClickChar1++;
+			// 	console.log(game.attackClickChar1);
+			// 	game.attackClickChar2 = 0;
+			// 	console.log(game.attackClickChar2);
 
 				// Increase mana by 5 on attacks
 
@@ -445,15 +412,18 @@ $(document).ready(function(){
 				// variable that makes it so defense higher than attacks don't heal a player
 				
 				var max = Math.max(0, (char1.attack - game.target.defense));
+console.log(char1.attack);
+console.log(game.target.defense);
+console.log(max);
 
 				//Takes damage off of target's current health
 
 				game.target.currentHealth = game.target.currentHealth - (max);
-
+console.log(max);
 				// Write in charSel using .html (first time for this run through) what happened damage wise
 
-				$(".charSel").html(char1.name + ' attacked for ' + max + ' through ' + game.target.name + "'s defense!");
-
+				$(".charSel").html('<p>' + char1.name + ' attacked for ' + max + ' through ' + game.target.name + "'s defense!</p><br>");
+console.log(max);
 				char1.attack = char1.attack + 6;  
 				console.log(game.target.currentHealth);
 
@@ -463,22 +433,18 @@ $(document).ready(function(){
 
 				if ($(".char1").hasClass("target")) {
 					$(".healthbar").html(healthbarTarget);
-					console.log("1");
 				}
 
 				else if ($(".char2").hasClass("target")) {
 					$(".healthbar2").html(healthbarTarget);
-					console.log("2");
 				}
 
 				else if ($(".char3").hasClass("target")) {
 					$(".healthbarComp").html(healthbarTarget);
-					console.log("3");
 				}
 
 				else if ($(".char4").hasClass("target")) {
 					$(".healthbarComp2").html(healthbarTarget);
-					console.log("4");
 				}
 
 				// Update progress bar to match % health left
@@ -546,13 +512,13 @@ $(document).ready(function(){
 
 					// Update the health numbers to match the new health
 
-				var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
+					var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
 
-				$(".healthbar").html(healthbarChar1);
+					$(".healthbar").html(healthbarChar1);
 
-				// Update progress bar to match % health left
+					// Update progress bar to match % health left
 
-				$(".healthbar").css("width", (char1.currentHealth / char1.totalHealth *100) + "%");
+					$(".healthbar").css("width", (char1.currentHealth / char1.totalHealth *100) + "%");
 
 					// if a character gets knocked out
 
@@ -571,247 +537,44 @@ $(document).ready(function(){
 						$(".charSel").html("<p>You lost!</p>")
 					}
 
-					// Decide which computer's turn it is
-					console.log(char2, char1)
-					if (game.compTurn <= 0) {
+				} //end of else statement for counterattack
 
-						game.compTurn++
+				// Decide which computer's turn it is
 
-						// Computer chooses the lowest health player character
+				if (game.compTurn <= 0) {
 
-						if (char1.currentHealth >= char2.currentHealth) {
+					game.compTurn++
 
-							// Computer chooses to use an ability or attack
+					// Computer chooses the lowest health player character
 
-							if (char3.mana >= 10) {
+					if (char1.currentHealth >= char2.currentHealth) {
 
-								// USE ABILITY
+						// Computer chooses to use an ability or attack
 
-								if (char3.ability == "Quick Strike") {
-									
-									// Decrease mana by 10 when using an ability
+						if (char3.mana >= 10) {
 
-									char3.mana = char3.mana - 10;
-									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+							// USE ABILITY
 
-									// variable that makes it so defense higher than attacks don't heal a player
-							
-									var max = Math.max(0, (char3.attack * 3 - char2.defense * 3));
+							if (char3.ability == "Quick Strike") {
+								
+								// Decrease mana by 10 when using an ability
 
-									//Takes damage off of target's current health
-
-									char2.currentHealth = char2.currentHealth - (max);
-
-									// States what target is doing in the charSel section
-
-									$(".charSel").append(char3.name + ' dealt ' + max + ' through' + game.target.name + "'s defense with Quick Strike!");
-
-									char3.attack = char3.attack + 18;  
-									console.log(game.target.currentHealth);
-
-									// Update the health numbers to match the new health
-
-									var healthbarChar2 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char2.currentHealth + '/' + char2.totalHealth + '</div></div>');
-
-									$(".healthbar2").html(healthbarChar2);
-									
-									// Update progress bar to match % health left
-
-									$(".compHealth").css("width", (char2.currentHealth / char2.totalHealth *100) + "%");
-
-									// if statement for both players KedO: You lose!
-
-									if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
-										$(".charSel").html("<p>You lost!</p>")
-
-										// hide buttons when you lose
-
-										$(".but").empty();
-										$(".but2").empty();
-
-									} //end if both opponents KO
-
-									// if statement for one player being knocked out
-
-									if (char2.currentHealth <= 0) {
-										$(".char2").empty();
-										$(".char2").fadIn("slow", function() {
-											$("char2").text("Oh no! This character is knocked out!");
-										});
-									} // End of if statement char2 ko
-
-								} // End if Quick Strike
-
-								if (char3.ability == "Intimidate") {
-									
-									// Decrease mana by 10 when using an ability
-
-									char3.mana = char3.mana - 10;
-									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
-
-									char2.attack = 0;
-
-									// States what the character is doing in the charSel section
-
-									$(".charSel").append(char3.name + ' intimidated ' + char2.name + "!");
-
-								} // End of ability intimidate
-
-								if (char3.ability == "Heal") {
-
-									// Decrease mana by 10 when using an ability
-
-									char3.mana = char3.mana - 10;
-									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
-
-									if (char3.currentHealth <= char4.currentHealth) {
-
-										var min = Math.min(char3.totalHealth, (char3.currentHealth + 100));
-
-										char3.currentHealth = min;
-
-										// States what the character is doing in the charSel section
-
-										$(".charSel").append(char3.name + ' healed herself for ' + min + ' !');
-
-										// Update the health numbers to match the new health
-
-										var healthbarChar3 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char3.currentHealth + '/' + char3.totalHealth + '</div></div>');
-
-										$(".healthbarComp").html(healthbarChar3);
-										
-										// Update progress bar to match % health left
-
-										$(".healthbarComp").css("width", (char3.currentHealth / char3.totalHealth *100) + "%");
-
-									} //End of if statement to heal char3
-
-									else {
-
-										var min = Math.min(char4.totalHealth, (char4.currentHealth + 100));
-
-										char4.currentHealth = min;
-
-										// States what the character is doing in the charSel section
-
-										$(".charSel").append(char3.name + ' healed ' + char4.name + ' for ' + min + ' !');
-
-										// Update the health numbers to match the new health
-
-										var healthbarChar4 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char4.currentHealth + '/' + char4.totalHealth + '</div></div>');
-
-										$(".healthbarComp2").html(healthbarChar4);
-										
-										// Update progress bar to match % health left
-
-										$(".healthbarComp2").css("width", (char4.currentHealth / char4.totalHealth *100) + "%");
-
-									} // End of Else heal char4
-								} // End of ability heal
-
-								if (char3.ability == "Radiation") {
-
-									// Decrease mana by 10 when using an ability
-
-									char3.mana = char3.mana - 10;
-									$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
-
-									// States what the character is doing in the charSel section
-
-									$(".charSel").append(char3.name + ' dealt 50 damage with radiation to ' + char1.name + ' and ' + char2.name + ' !');
-
-									char1.currentHealth = char1.currentHealth - 50;
-
-									// Update the health numbers to match the new health
-
-										var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
-
-										$(".healthbar1").html(healthbarChar1);
-										
-										// Update progress bar to match % health left
-
-										$(".healthbar1").css("width", (char1.currentHealth / char1.totalHealth *100) + "%");
-
-										// if statement for both players KedO: You lose!
-
-										if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
-											$(".charSel").html("<p>You lost!</p>")
-
-											// hide buttons when you lose
-
-											$(".but").empty();
-											$(".but2").empty();
-
-										} //end if both opponents KO
-
-										// if statement for one player being knocked out
-
-										if (char1.currentHealth <= 0) {
-											$(".char1").empty();
-											$(".char1").fadIn("slow", function() {
-												$("char1").text("Oh no! This character is knocked out!");
-											});
-										}
-
-									char2.currentHealth = char2.currentHealth - 50;
-
-									// Update the health numbers to match the new health
-
-										var healthbarChar2 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char2.currentHealth + '/' + char2.totalHealth + '</div></div>');
-
-										$(".healthbar2").html(healthbarChar2);
-										
-										// Update progress bar to match % health left
-
-										$(".compHealth").css("width", (char2.currentHealth / char2.totalHealth *100) + "%");
-
-										// if statement for both players KedO: You lose!
-
-										if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
-											$(".charSel").html("<p>You lost!</p>")
-
-											// hide buttons when you lose
-
-											$(".but").empty();
-											$(".but2").empty();
-
-										} //end if both opponents KO
-
-										// if statement for one player being knocked out
-
-										if (char2.currentHealth <= 0) {
-											$(".char2").empty();
-											$(".char2").fadIn("slow", function() {
-												$("char2").text("Oh no! This character is knocked out!");
-											});
-										}
-
-								} // End of ability radiation
-
-							} //end if statement about using ability
-
-							else {
-
-								// Computer uses attack
-
-								// Increase mana by 5 on attacks
-
-								char3.mana = char3.mana + 5;
+								char3.mana = char3.mana - 10;
 								$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
 
 								// variable that makes it so defense higher than attacks don't heal a player
-							
-								var max = Math.max(0, (char3.attack - char2.defense));
-
-								// States what the character is doing in the charSel section
-
-								$(".charSel").append(char3.name + ' attacked ' + char2.name + ' for ' + max + ' damage through their defense!');
+						
+								var max = Math.max(0, (char3.attack * 3 - char2.defense * 3));
 
 								//Takes damage off of target's current health
 
 								char2.currentHealth = char2.currentHealth - (max);
-								char3.attack = char3.attack + 6;  
-								console.log(game.target.currentHealth);
+
+								// States what target is doing in the charSel section
+
+								$(".charSel").append(char3.name + ' dealt ' + max + ' through' + game.target.name + "'s defense with Quick Strike!");
+
+								char3.attack = char3.attack + 18;  
 
 								// Update the health numbers to match the new health
 
@@ -823,17 +586,162 @@ $(document).ready(function(){
 
 								$(".compHealth").css("width", (char2.currentHealth / char2.totalHealth *100) + "%");
 
-								// if statement for both players KedO: You win!
+								// if statement for both players KedO: You lose!
 
 								if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
 									$(".charSel").html("<p>You lost!</p>")
 
-									// hide buttons when you win
+									// hide buttons when you lose
 
 									$(".but").empty();
 									$(".but2").empty();
 
+								} //end if both opponents KO
 
+								// if statement for one player being knocked out
+
+								if (char2.currentHealth <= 0) {
+									$(".char2").empty();
+									$(".char2").fadIn("slow", function() {
+										$("char2").text("Oh no! This character is knocked out!");
+									});
+								} // End of if statement char2 ko
+
+							} // End if Quick Strike
+
+							if (char3.ability == "Intimidate") {
+								
+								// Decrease mana by 10 when using an ability
+
+								char3.mana = char3.mana - 10;
+								$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
+								char2.attack = 0;
+
+								// States what the character is doing in the charSel section
+
+								$(".charSel").append(char3.name + ' intimidated ' + char2.name + "!");
+
+							} // End of ability intimidate
+
+							if (char3.ability == "Heal") {
+
+								// Decrease mana by 10 when using an ability
+
+								char3.mana = char3.mana - 10;
+								$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
+								if ((char3.currentHealth/char3.totalHealth) <= (char4.currentHealth/char4.totalHealth)) {
+
+									var min = Math.min(char3.totalHealth, (char3.currentHealth + 100));
+
+									char3.currentHealth = min;
+
+									// States what the character is doing in the charSel section
+
+									$(".charSel").append(char3.name + ' healed herself for ' + min + ' !');
+
+									// Update the health numbers to match the new health
+
+									var healthbarChar3 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char3.currentHealth + '/' + char3.totalHealth + '</div></div>');
+
+									$(".healthbarComp").html(healthbarChar3);
+									
+									// Update progress bar to match % health left
+
+									$(".healthbarComp").css("width", (char3.currentHealth / char3.totalHealth *100) + "%");
+
+								} //End of if statement to heal char3
+
+								else {
+
+									var min = Math.min(char4.totalHealth, (char4.currentHealth + 100));
+
+									char4.currentHealth = min;
+
+									// States what the character is doing in the charSel section
+
+									$(".charSel").append(char3.name + ' healed ' + char4.name + ' for ' + min + ' !');
+
+									// Update the health numbers to match the new health
+
+									var healthbarChar4 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char4.currentHealth + '/' + char4.totalHealth + '</div></div>');
+
+									$(".healthbarComp2").html(healthbarChar4);
+									
+									// Update progress bar to match % health left
+
+									$(".healthbarComp2").css("width", (char4.currentHealth / char4.totalHealth *100) + "%");
+
+								} // End of Else heal char4
+							} // End of ability heal
+
+							if (char3.ability == "Radiation") {
+
+								// Decrease mana by 10 when using an ability
+
+								char3.mana = char3.mana - 10;
+								$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
+
+								// States what the character is doing in the charSel section
+
+								$(".charSel").append(char3.name + ' dealt 50 damage with radiation to ' + char1.name + ' and ' + char2.name + ' !');
+
+								char1.currentHealth = char1.currentHealth - 50;
+
+								// Update the health numbers to match the new health
+
+								var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
+
+								$(".healthbar1").html(healthbarChar1);
+								
+								// Update progress bar to match % health left
+
+								$(".healthbar1").css("width", (char1.currentHealth / char1.totalHealth *100) + "%");
+
+								// if statement for both players KedO: You lose!
+
+								if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
+									$(".charSel").html("<p>You lost!</p>")
+
+									// hide buttons when you lose
+
+									$(".but").empty();
+									$(".but2").empty();
+
+								} //end if both opponents KO
+
+								// if statement for one player being knocked out
+
+								if (char1.currentHealth <= 0) {
+									$(".char1").empty();
+									$(".char1").fadIn("slow", function() {
+										$("char1").text("Oh no! This character is knocked out!");
+									});
+								}
+
+								char2.currentHealth = char2.currentHealth - 50;
+
+								// Update the health numbers to match the new health
+
+								var healthbarChar2 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char2.currentHealth + '/' + char2.totalHealth + '</div></div>');
+
+								$(".healthbar2").html(healthbarChar2);
+								
+								// Update progress bar to match % health left
+
+								$(".compHealth").css("width", (char2.currentHealth / char2.totalHealth *100) + "%");
+
+								// if statement for both players KedO: You lose!
+
+								if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
+
+									$(".charSel").html("<p>You lost!</p>")
+
+									// hide buttons when you lose
+
+									$(".but").empty();
+									$(".but2").empty();
 
 								} //end if both opponents KO
 
@@ -845,108 +753,130 @@ $(document).ready(function(){
 										$("char2").text("Oh no! This character is knocked out!");
 									});
 								}
-								
-								
-								else {
 
-									// variable that makes it so defense higher than attacks don't heal a player
+							} // End of ability radiation
 
-									var max = Math.max(0, (char2.counterAttack - char3.defense));
-
-									char3.currentHealth = char3.currentHealth - max;
-
-									// States what the character is doing in the charSel section
-
-									$(".charSel").append(char2.name + ' counterattacked ' + char3.name + ' for ' + max + ' damage through their defense!');
-
-									// Update the health numbers to match the new health
-
-									var healthbarChar3 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char3.currentHealth + '/' + char3.totalHealth + '</div></div>');
-
-									$(".healthbarComp").html(healthbarChar3);
-
-									// Update progress bar to match % health left
-
-									$(".healthbarComp").css("width", (game.char3.currentHealth / game.char3.totalHealth *100) + "%");
-
-									// if a character gets knocked out
-
-									if (char3.currentHealth <= 0) {
-										$(".char3").empty();
-										$(".char3").fadeIn("slow", function() {
-											$(".char3").text("KO!");
-										});
-
-									} //end if a computer character dies
-
-									// *****if statement both computers are dead you win
-
-									if (char3.currentHealth <= 0 && char4.currentHealth <= 0) {
-										$(".charSel").html("<p>You won!</p>")
-									}
-
-
-								} //end else statement about using attack
-
-							} // End if statement on comp choosing lowest health target
-
-						} //End if statement about which comp character's turn it is
+						} //end if statement about using ability
 
 						else {
 
-							game.compTurn = 0;
+							// Computer uses attack
 
-							//********copy all the if compturn junk in here and modify for char4
+							// Increase mana by 5 on attacks
 
-						} //End else statement about which comp character's turn it is
+							char3.mana = char3.mana + 5;
+							$("#mana3").html("<p>Mana: " + char3.mana + "</p>");
 
-					
-
-
-
-//*****************************IS THIS NEEDED?
-
-						// // *******Adjust player's healthbar to new numbers
-
-						// var healthbar = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + character.currentHealth + '/' + character.totalHealth + '</div></div>');
-						// $(".healthbar").html(healthbar);
-						// $(".health").css("width", (character.currentHealth / character.totalHealth * 100) + "%");
-
-						// // if a character gets knocked out
-
-						// if (character.currentHealth <= 0) {
-						// 	$(".team").empty();
-						// 	$(".but").empty();
-						// 	$(".team").fadeIn("slow", function() {
-						// 		$(".team").text("Oh no! This character is knocked out!");
-						// 	});
-						// } //end if you die
-
-						// // if statement both characters are dead you lose
-
-						// if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
-						// 	$(".charSel").html("<p>You lost!</p>")
-						// } //end if you lost
-
-
-//**************************************
-
-
-
-
+							// variable that makes it so defense higher than attacks don't heal a player
 						
+							var max = Math.max(0, (char3.attack - char2.defense));
 
-					} // end of else counter attack/computer turn
+							// States what the character is doing in the charSel section
 
-				} //end of if attack click value 
+							$(".charSel").append(char3.name + ' attacked ' + char2.name + ' for ' + max + ' damage through their defense!');
 
-			} // End of if statement for which player character's turn
+							//Takes damage off of target's current health
 
-			else {
-				
-				$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
+							char2.currentHealth = char2.currentHealth - (max);
+							char3.attack = char3.attack + 6;  
 
-			} //end else take both chars turns
+							// Update the health numbers to match the new health
+
+							var healthbarChar2 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char2.currentHealth + '/' + char2.totalHealth + '</div></div>');
+
+							$(".healthbar2").html(healthbarChar2);
+							
+							// Update progress bar to match % health left
+
+							$(".compHealth").css("width", (char2.currentHealth / char2.totalHealth *100) + "%");
+
+							// if statement for both players KedO: You win!
+
+							if (char1.currentHealth <= 0 && char2.currentHealth <= 0) {
+								$(".charSel").html("<p>You lost!</p>")
+
+								// hide buttons when you win
+
+								$(".but").empty();
+								$(".but2").empty();
+
+
+
+							} //end if both opponents KO
+
+							// if statement for one player being knocked out
+
+							if (char2.currentHealth <= 0) {
+								$(".char2").empty();
+								$(".char2").fadIn("slow", function() {
+									$("char2").text("Oh no! This character is knocked out!");
+								});
+							}
+							
+							
+							else {
+
+								// variable that makes it so defense higher than attacks don't heal a player
+
+								var max = Math.max(0, (char2.counterAttack - char3.defense));
+
+								char3.currentHealth = char3.currentHealth - max;
+
+								// States what the character is doing in the charSel section
+
+								$(".charSel").append(char2.name + ' counterattacked ' + char3.name + ' for ' + max + ' damage through their defense!');
+
+								// Update the health numbers to match the new health
+
+								var healthbarChar3 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char3.currentHealth + '/' + char3.totalHealth + '</div></div>');
+
+								$(".healthbarComp").html(healthbarChar3);
+
+								// Update progress bar to match % health left
+
+								$(".healthbarComp").css("width", (char3.currentHealth / char3.totalHealth *100) + "%");
+
+								// if a character gets knocked out
+
+								if (char3.currentHealth <= 0) {
+									$(".char3").empty();
+									$(".char3").fadeIn("slow", function() {
+										$(".char3").text("KO!");
+									});
+
+								} //end if a computer character dies
+
+								// *****if statement both computers are dead you win
+
+								if (char3.currentHealth <= 0 && char4.currentHealth <= 0) {
+									$(".charSel").html("<p>You won!</p>")
+								}
+
+							} //end else statement about counterattacking
+
+						} //end else statement about using attack
+
+					} // End if statement on comp choosing lowest health target
+
+				} //End if statement about which comp character's turn it is
+
+				else {
+
+					game.compTurn = 0;
+
+					//********copy all the if compturn junk in here and modify for char4
+
+				} //End else statement about which comp character's turn it is
+
+			//} // End of if statement for which player character's turn
+
+//*************************************************WTF ELSE STATEMENT! if the attackClickChar1 isn't 0 this is supposed to run...but it just always runs If I decide to work on this later the other lines of code that are commented are 902 and 426-422 and 906-910 (These are the lines right below this comment. I might have to math out to get the other lines after I change the code around)
+
+			// else {
+
+			// 	$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
+
+			// } //end if that should be an else take both chars turns
 
 		}); // End of attack1 click
 
