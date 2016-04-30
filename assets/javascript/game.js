@@ -170,7 +170,7 @@ $(document).ready(function(){
 		// Increase the number of clicks so that you can count how many characters a player has left to choose
 
 		game.clicks = game.clicks + 1;
-console.log(game.clicks);
+
 		//sets variable character to the object of a character so that you can pull information out of the object
 
 		var character = game.characters[$(this).data('index')];
@@ -391,14 +391,14 @@ console.log(game.attackClickChar1);
 
 			//if statement to take turns for each character
 			
-			if (game.attackClickChar1 === 0) {
+			// if (game.attackClickChar1 === 0) {
 
-				//changes attackclick variables to make players take turns
+			// 	//changes attackclick variables to make players take turns
 
-				game.attackClickChar1++;
-				console.log(game.attackClickChar1);
-				game.attackClickChar2 = 0;
-				console.log(game.attackClickChar2);
+			// 	game.attackClickChar1++;
+			// 	console.log(game.attackClickChar1);
+			// 	game.attackClickChar2 = 0;
+			// 	console.log(game.attackClickChar2);
 
 				// Increase mana by 5 on attacks
 
@@ -508,9 +508,13 @@ console.log(max);
 
 					// Update the health numbers to match the new health
 
-					var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success compHealth bar" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
-
+					var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success bar health" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
+					healthbarChar1.attr("id", "health1");
 					$(".healthbar").html(healthbarChar1);
+
+					// var healthbarChar1 = $('<div class="progress healthBG"><div class="progress-bar progress-bar-success health" role="progresbar">' + char1.currentHealth + '/' + char1.totalHealth + '</div></div>');
+
+					// $(".healthbar").html(healthbarChar1);
 
 					// Update progress bar to match % health left
 
@@ -568,7 +572,7 @@ console.log(max);
 
 								// States what target is doing in the charSel section
 
-								$(".charSel").append('<p>' + char3.name + ' dealt ' + max + ' damage through ' + game.target.name + "'s defense with Quick Strike!</p><br>");
+								$(".charSel").append('<p>' + char3.name + ' dealt ' + max + ' damage through ' + char2.name + "'s defense with Quick Strike!</p><br>");
 
 								char3.attack = char3.attack + 18;  
 
@@ -868,15 +872,15 @@ console.log(max);
 
 				} //End else statement about which comp character's turn it is
 
-			} // End of if statement for which player character's turn
+			//} // End of if statement for which player character's turn
 
 //*************************************************WTF ELSE STATEMENT! if the attackClickChar1 isn't 0 this is supposed to run...but it just always runs If I decide to work on this later the other lines of code that are commented are 902 and 426-422 and 906-910 (These are the lines right below this comment. I might have to math out to get the other lines after I change the code around)
 
-			else {
+			// else {
 
-				$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
+			// 	$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
 
-			} //end if that should be an else take both chars turns
+			// } //end if that should be an else take both chars turns
 
 		}); // End of attack1 click
 
