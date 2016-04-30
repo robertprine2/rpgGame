@@ -170,7 +170,7 @@ $(document).ready(function(){
 		// Increase the number of clicks so that you can count how many characters a player has left to choose
 
 		game.clicks = game.clicks + 1;
-
+console.log(game.clicks);
 		//sets variable character to the object of a character so that you can pull information out of the object
 
 		var character = game.characters[$(this).data('index')];
@@ -205,13 +205,9 @@ $(document).ready(function(){
 
 			$(pick).addClass("selected");
 			
-			// Creates the attack and ability buttons below the characters
+			// Creates the ability text below the characters
 
-			var buttonAtt = $('<button id="attack1">').text("Attack");
-			$(".but").append(buttonAtt);
-
-			var buttonAbil = $('<button id="ability1">').text(character.ability);
-			$(".but").append(buttonAbil);
+			$("#ability1").append(character.ability);
 
 			// Computer randomly picks their character
 
@@ -288,13 +284,9 @@ $(document).ready(function(){
 			
 			// game.randCharacters.splice(indexOf, 1);			
 			
-			// Creates the attack and ability buttons below the characters 2nd column
+			// Creates the ability button text below the characters 2nd column
 
-			var buttonAtt = $('<button id="attack2">').text("Attack");
-			$(".but2").append(buttonAtt);
-
-			var buttonAbil = $('<button id="ability2">').text(character.ability);
-			$(".but2").append(buttonAbil);
+			$("#ability2").append(character.ability);
 
 			// Computer randomly picks their character
 
@@ -326,36 +318,14 @@ $(document).ready(function(){
 
 		} // End else if statement for picking the second character in arena click 2
 
+	}); //ends picking characters on click function
+
 		//Targets a character for attacking or using abilities
 
 		$(".char").on("click", function() {
 
-			// if statement to not target on second click
-console.log(game.clicks);
-			if (game.clicks >= 3) {
-
-
-			$(".target").removeClass("target");
-			$(this).addClass("target");
-
-			var that = this;
-			
-			var filterArray = game.characters.filter(function (ch) {
-				return ch.name == $(that).data('name');
-			});
-		
-			game.target = filterArray[0];
-
-			} // end if statement to not target on second click
-
-		}); // End of target on click function
-
-		// Char1 Attacks the TARGET
-
-		//assigns the character's object in the char1 id
-
-		char1 = game.characters[$(".char1").data("index")];
-
+			char1 = game.characters[$(".char1").data("index")];
+	
 		// var filterArray1 = game.characters.filter(function (ch) {
 		// 	return ch.name == $("#char1").data("name");
 		// });
@@ -389,20 +359,46 @@ console.log(game.clicks);
 
 		// var char4 = filterArray4[0];
 
-		// Attack button1 click function
+			// if statement to not target on second click
 
+			if (game.clicks >= 3) {
+
+
+			$(".target").removeClass("target");
+			$(this).addClass("target");
+
+			var that = this;
+			
+			var filterArray = game.characters.filter(function (ch) {
+				return ch.name == $(that).data('name');
+			});
+		
+			game.target = filterArray[0];
+
+			} // end if statement to not target on second click
+
+		}); // End of target on click function
+
+		// Char1 Attacks the TARGET
+
+		//assigns the character's object in the char1 id
+
+
+
+		// Attack button1 click function
+console.log(game.attackClickChar1);
 		$("#attack1").on("click", function() {
 
-			// if statement to take turns for each character
+			//if statement to take turns for each character
 			
-			// if (game.attackClickChar1 === 0) {
+			if (game.attackClickChar1 === 0) {
 
-			// 	//changes attackclick variables to make players take turns
+				//changes attackclick variables to make players take turns
 
-			// 	game.attackClickChar1++;
-			// 	console.log(game.attackClickChar1);
-			// 	game.attackClickChar2 = 0;
-			// 	console.log(game.attackClickChar2);
+				game.attackClickChar1++;
+				console.log(game.attackClickChar1);
+				game.attackClickChar2 = 0;
+				console.log(game.attackClickChar2);
 
 				// Increase mana by 5 on attacks
 
@@ -508,7 +504,7 @@ console.log(max);
 
 					char1.currentHealth = char1.currentHealth - max;
 
-					$(".charSel").append(game.target.name + ' counterattacked for ' + max + ' through' + char1.name + "'s defense!");
+					$(".charSel").append('<p>' + game.target.name + ' counterattacked for ' + max + ' through ' + char1.name + "'s defense!</p><br>");
 
 					// Update the health numbers to match the new health
 
@@ -572,7 +568,7 @@ console.log(max);
 
 								// States what target is doing in the charSel section
 
-								$(".charSel").append(char3.name + ' dealt ' + max + ' through' + game.target.name + "'s defense with Quick Strike!");
+								$(".charSel").append('<p>' + char3.name + ' dealt ' + max + ' damage through ' + game.target.name + "'s defense with Quick Strike!</p><br>");
 
 								char3.attack = char3.attack + 18;  
 
@@ -620,7 +616,7 @@ console.log(max);
 
 								// States what the character is doing in the charSel section
 
-								$(".charSel").append(char3.name + ' intimidated ' + char2.name + "!");
+								$(".charSel").append('<p>' + char3.name + ' intimidated ' + char2.name + "!</p><br>");
 
 							} // End of ability intimidate
 
@@ -635,11 +631,13 @@ console.log(max);
 
 									var min = Math.min(char3.totalHealth, (char3.currentHealth + 100));
 
+									var healAmount = min - char3.currentHealth;
+
 									char3.currentHealth = min;
 
 									// States what the character is doing in the charSel section
 
-									$(".charSel").append(char3.name + ' healed herself for ' + min + ' !');
+									$(".charSel").append('<p>' + char3.name + ' healed herself for ' + healAmount + '!</p><br>');
 
 									// Update the health numbers to match the new health
 
@@ -657,11 +655,13 @@ console.log(max);
 
 									var min = Math.min(char4.totalHealth, (char4.currentHealth + 100));
 
+									var healAmount = min - char3.currentHealth;
+
 									char4.currentHealth = min;
 
 									// States what the character is doing in the charSel section
 
-									$(".charSel").append(char3.name + ' healed ' + char4.name + ' for ' + min + ' !');
+									$(".charSel").append('<p>' + char3.name + ' healed ' + char4.name + ' for ' + healAmount + '!</p><br>');
 
 									// Update the health numbers to match the new health
 
@@ -685,7 +685,7 @@ console.log(max);
 
 								// States what the character is doing in the charSel section
 
-								$(".charSel").append(char3.name + ' dealt 50 damage with radiation to ' + char1.name + ' and ' + char2.name + ' !');
+								$(".charSel").append('<p>' + char3.name + ' dealt 50 damage with radiation to ' + char1.name + ' and ' + char2.name + '!</p><br>');
 
 								char1.currentHealth = char1.currentHealth - 50;
 
@@ -773,7 +773,7 @@ console.log(max);
 
 							// States what the character is doing in the charSel section
 
-							$(".charSel").append(char3.name + ' attacked ' + char2.name + ' for ' + max + ' damage through their defense!');
+							$(".charSel").append('<p>' + char3.name + ' attacked for ' + max + ' through ' + char2.name + "'s defense!</p><br>");
 
 							//Takes damage off of target's current health
 
@@ -824,7 +824,7 @@ console.log(max);
 
 								// States what the character is doing in the charSel section
 
-								$(".charSel").append(char2.name + ' counterattacked ' + char3.name + ' for ' + max + ' damage through their defense!');
+								$(".charSel").append('<p>' + char2.name + ' counterattacked for ' + max + ' through ' + char3.name + "'s defense!</p><br>");
 
 								// Update the health numbers to match the new health
 
@@ -868,15 +868,15 @@ console.log(max);
 
 				} //End else statement about which comp character's turn it is
 
-			//} // End of if statement for which player character's turn
+			} // End of if statement for which player character's turn
 
 //*************************************************WTF ELSE STATEMENT! if the attackClickChar1 isn't 0 this is supposed to run...but it just always runs If I decide to work on this later the other lines of code that are commented are 902 and 426-422 and 906-910 (These are the lines right below this comment. I might have to math out to get the other lines after I change the code around)
 
-			// else {
+			else {
 
-			// 	$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
+				$(".charSel").append("<p>Don't forget to use your other character as well. It's their turn.</p>");
 
-			// } //end if that should be an else take both chars turns
+			} //end if that should be an else take both chars turns
 
 		}); // End of attack1 click
 
@@ -885,8 +885,6 @@ console.log(max);
 		// Ability Button1 click
 
 		// Ability Button2 click
-
-	}); //end of pick character click
 
 	// ******Reset Button
 
